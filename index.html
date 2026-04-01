@@ -15,7 +15,6 @@
   --accent: #c8502a;
   --today-ring: #c8502a;
 
-  /* Area colors */
   --mm: #2563eb;
   --fac: #7c3aed;
   --qmom: #059669;
@@ -31,7 +30,6 @@ body {
   min-height: 100vh;
 }
 
-/* ─── HEADER ─────────────────────────────────────── */
 .site-header {
   background: var(--ink);
   color: #fff;
@@ -77,7 +75,6 @@ body {
   letter-spacing: 0.08em;
 }
 
-/* ─── CONTROLS ───────────────────────────────────── */
 .controls {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -108,6 +105,99 @@ body {
   cursor: pointer;
 }
 
+.subject-filter-wrap {
+  position: relative;
+  min-width: 240px;
+}
+
+.subject-filter-btn {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.82rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.45rem 0.7rem;
+  color: var(--ink);
+  cursor: pointer;
+  min-width: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.subject-filter-btn span {
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.subject-filter-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  width: min(360px, 92vw);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+  padding: 0.8rem;
+  z-index: 50;
+}
+
+.subject-filter-panel.open { display: block; }
+
+.subject-filter-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.subject-filter-actions button {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.subject-filter-list {
+  max-height: 260px;
+  overflow: auto;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.subject-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.76rem;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.45rem 0.55rem;
+  cursor: pointer;
+}
+
+.subject-option:hover { border-color: var(--border); }
+
+.subject-option input {
+  margin-top: 0.18rem;
+  accent-color: var(--accent);
+}
+
+.subject-option small {
+  display: block;
+  color: var(--ink-muted);
+  font-size: 0.66rem;
+  margin-top: 0.12rem;
+}
+
 .search-box {
   display: flex;
   align-items: center;
@@ -132,7 +222,6 @@ body {
 .search-box input::placeholder { color: var(--ink-muted); }
 .search-icon { color: var(--ink-muted); font-size: 0.85rem; }
 
-/* ─── AREA LEGEND ────────────────────────────────── */
 .legend-bar {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -165,12 +254,11 @@ body {
 }
 .legend-chip:hover { transform: scale(1.04); }
 .legend-chip.off { opacity: 0.25; }
-.legend-chip[data-area="MM & IS"]        { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
-.legend-chip[data-area="FAC & OBHR"]     { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
-.legend-chip[data-area="QMOM & HLAM"]   { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.legend-chip[data-area="MM & IS"] { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+.legend-chip[data-area="FAC & OBHR"] { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
+.legend-chip[data-area="QMOM & HLAM"] { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
 .legend-chip[data-area="SM & Economics"] { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
 
-/* ─── MONTH NAV ──────────────────────────────────── */
 .month-nav {
   display: flex;
   align-items: center;
@@ -193,20 +281,22 @@ body {
 }
 .nav-btns { display: flex; gap: 0.4rem; }
 .nav-btn {
-  width: 36px; height: 36px;
+  width: 36px;
+  height: 36px;
   border: 1.5px solid var(--border);
   border-radius: 50%;
   background: var(--surface);
   cursor: pointer;
   font-size: 1rem;
   color: var(--ink);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.15s;
 }
 .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
 .nav-btn:disabled { opacity: 0.25; cursor: default; }
 
-/* Month tab dots */
 .month-tabs {
   display: flex;
   gap: 0.4rem;
@@ -228,7 +318,6 @@ body {
 .month-tab:hover { border-color: var(--accent); color: var(--accent); }
 .month-tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-/* ─── CALENDAR ───────────────────────────────────── */
 .calendar-wrap {
   max-width: 1200px;
   margin: 0 auto;
@@ -267,10 +356,16 @@ body {
   transition: border-color 0.15s;
 }
 .day-cell:hover { border-color: #bbb; }
-.day-cell.empty { background: transparent; border-color: transparent; pointer-events: none; }
+.day-cell.empty {
+  background: transparent;
+  border-color: transparent;
+  pointer-events: none;
+}
 .day-cell.has-events { border-color: #d0ccc8; }
-.day-cell.today { border-color: var(--today-ring) !important; border-width: 2px; }
-
+.day-cell.today {
+  border-color: var(--today-ring) !important;
+  border-width: 2px;
+}
 .day-num {
   font-size: 0.78rem;
   font-weight: 600;
@@ -285,11 +380,13 @@ body {
   background: var(--accent);
   color: #fff;
   border-radius: 50%;
-  width: 20px; height: 20px;
-  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.72rem;
 }
-
 .event-tag {
   display: block;
   font-size: 0.6rem;
@@ -307,11 +404,10 @@ body {
 }
 .event-tag:hover { filter: brightness(0.92); }
 .event-tag.hidden { display: none; }
-.event-tag.area-mm      { background: #eff6ff; color: #1d4ed8; border-color: #3b82f6; }
-.event-tag.area-fac     { background: #f5f3ff; color: #6d28d9; border-color: #8b5cf6; }
-.event-tag.area-qmom    { background: #ecfdf5; color: #047857; border-color: #10b981; }
-.event-tag.area-sm      { background: #fffbeb; color: #b45309; border-color: #f59e0b; }
-
+.event-tag.area-mm { background: #eff6ff; color: #1d4ed8; border-color: #3b82f6; }
+.event-tag.area-fac { background: #f5f3ff; color: #6d28d9; border-color: #8b5cf6; }
+.event-tag.area-qmom { background: #ecfdf5; color: #047857; border-color: #10b981; }
+.event-tag.area-sm { background: #fffbeb; color: #b45309; border-color: #f59e0b; }
 .more-tag {
   font-size: 0.58rem;
   color: var(--ink-muted);
@@ -321,7 +417,6 @@ body {
 }
 .more-tag:hover { color: var(--accent); }
 
-/* ─── MODAL / DAY PANEL ──────────────────────────── */
 .overlay {
   display: none;
   position: fixed;
@@ -374,7 +469,6 @@ body {
 .panel-close:hover { color: #fff; }
 
 .panel-body { padding: 1rem 1.5rem 1.5rem; }
-
 .time-group { margin-bottom: 1.2rem; }
 .time-label {
   font-size: 0.7rem;
@@ -386,7 +480,6 @@ body {
   padding-bottom: 0.3rem;
   border-bottom: 1px solid var(--border);
 }
-
 .session-card {
   background: var(--bg);
   border-radius: 8px;
@@ -394,11 +487,10 @@ body {
   margin-bottom: 0.5rem;
   border-left: 4px solid transparent;
 }
-.session-card.area-mm   { border-color: #3b82f6; }
-.session-card.area-fac  { border-color: #8b5cf6; }
+.session-card.area-mm { border-color: #3b82f6; }
+.session-card.area-fac { border-color: #8b5cf6; }
 .session-card.area-qmom { border-color: #10b981; }
-.session-card.area-sm   { border-color: #f59e0b; }
-
+.session-card.area-sm { border-color: #f59e0b; }
 .session-course {
   font-size: 0.88rem;
   font-weight: 600;
@@ -420,10 +512,10 @@ body {
   padding: 1px 6px;
   border-radius: 999px;
 }
-.badge.area-mm   { background: #dbeafe; color: #1e40af; }
-.badge.area-fac  { background: #ede9fe; color: #5b21b6; }
+.badge.area-mm { background: #dbeafe; color: #1e40af; }
+.badge.area-fac { background: #ede9fe; color: #5b21b6; }
 .badge.area-qmom { background: #d1fae5; color: #065f46; }
-.badge.area-sm   { background: #fef3c7; color: #92400e; }
+.badge.area-sm { background: #fef3c7; color: #92400e; }
 .code-badge {
   font-family: monospace;
   font-size: 0.68rem;
@@ -432,12 +524,7 @@ body {
   border-radius: 3px;
 }
 
-/* ─── LIST VIEW ──────────────────────────────────── */
-.view-toggle {
-  display: flex;
-  gap: 0.3rem;
-  margin-left: auto;
-}
+.view-toggle { display: flex; gap: 0.3rem; margin-left: auto; }
 .vtbtn {
   padding: 0.3rem 0.75rem;
   border-radius: 5px;
@@ -458,7 +545,6 @@ body {
   padding: 0 2rem 3rem;
 }
 .list-view.visible { display: block; }
-
 .list-day-block { margin-bottom: 1.5rem; }
 .list-day-head {
   font-family: 'Playfair Display', serif;
@@ -480,7 +566,6 @@ body {
   text-transform: uppercase;
   color: var(--ink-muted);
 }
-
 .list-row {
   display: grid;
   grid-template-columns: 160px 1fr auto;
@@ -493,7 +578,6 @@ body {
 }
 .list-row:hover { background: #eeecea; }
 .list-row.hidden { display: none; }
-
 .list-time {
   font-size: 0.75rem;
   font-weight: 600;
@@ -509,9 +593,15 @@ body {
   font-size: 0.72rem;
   color: var(--ink-muted);
 }
-.list-badges { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; align-items: flex-start; padding-top: 1px; }
+.list-badges {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-top: 1px;
+}
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
 @media (max-width: 700px) {
   .site-header { padding: 1.2rem 1rem; }
   .controls { padding: 0.75rem 1rem; }
@@ -522,16 +612,17 @@ body {
   .list-row { grid-template-columns: 1fr; gap: 0.2rem; }
   .list-badges { justify-content: flex-start; }
   .header-stats { display: none; }
+  .subject-filter-wrap { width: 100%; }
+  .subject-filter-btn, .subject-filter-panel { width: 100%; min-width: 0; }
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="site-header">
   <div class="header-title">
-    <h1>EPGP17 · Quarter VI<br>Platform Schedule</h1>
-    <p>20 April 2026 – 31 July 2026</p>
+    <h1>EPGP17 Quarter VI<br>Platform Schedule</h1>
+    <p>20 April 2026 — 31 July 2026</p>
   </div>
   <div class="header-stats">
     <div class="stat">
@@ -549,16 +640,27 @@ body {
   </div>
 </header>
 
-<!-- CONTROLS -->
 <div class="controls">
   <div>
     <label for="filterFaculty">Faculty</label>
     <select id="filterFaculty"><option value="">All Faculty</option></select>
   </div>
-  <div>
-    <label for="filterCourse">Course</label>
-    <select id="filterCourse"><option value="">All Courses</option></select>
+
+  <div class="subject-filter-wrap">
+    <label>Subjects</label>
+    <button type="button" class="subject-filter-btn" id="subjectFilterBtn" aria-expanded="false">
+      <span id="subjectFilterLabel">All Subjects</span>
+      <span id="subjectFilterCount">All</span>
+    </button>
+    <div class="subject-filter-panel" id="subjectFilterPanel">
+      <div class="subject-filter-actions">
+        <button type="button" id="subjectSelectAll">Select all</button>
+        <button type="button" id="subjectClearAll">Clear all</button>
+      </div>
+      <div class="subject-filter-list" id="subjectFilterList"></div>
+    </div>
   </div>
+
   <div>
     <label for="filterTime">Time</label>
     <select id="filterTime">
@@ -569,26 +671,26 @@ body {
       <option value="07.00 PM">07:00 PM</option>
     </select>
   </div>
+
   <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input id="searchBox" type="text" placeholder="Search course, faculty, code…">
+    <span class="search-icon">⌕</span>
+    <input id="searchBox" type="text" placeholder="Search course, faculty, code">
   </div>
+
   <div class="view-toggle">
-    <button class="vtbtn active" id="btnCal" onclick="setView('cal')">📅 Calendar</button>
-    <button class="vtbtn" id="btnList" onclick="setView('list')">☰ List</button>
+    <button class="vtbtn active" id="btnCal" onclick="setView('cal')">Calendar</button>
+    <button class="vtbtn" id="btnList" onclick="setView('list')">List</button>
   </div>
 </div>
 
-<!-- AREA LEGEND -->
 <div class="legend-bar">
   <span>Area</span>
-  <div class="legend-chip" data-area="MM & IS" onclick="toggleArea(this)">● MM &amp; IS</div>
-  <div class="legend-chip" data-area="FAC & OBHR" onclick="toggleArea(this)">● FAC &amp; OBHR</div>
-  <div class="legend-chip" data-area="QMOM & HLAM" onclick="toggleArea(this)">● QMOM &amp; HLAM</div>
-  <div class="legend-chip" data-area="SM & Economics" onclick="toggleArea(this)">● SM &amp; Economics</div>
+  <div class="legend-chip" data-area="MM & IS" onclick="toggleArea(this)">MM & IS</div>
+  <div class="legend-chip" data-area="FAC & OBHR" onclick="toggleArea(this)">FAC & OBHR</div>
+  <div class="legend-chip" data-area="QMOM & HLAM" onclick="toggleArea(this)">QMOM & HLAM</div>
+  <div class="legend-chip" data-area="SM & Economics" onclick="toggleArea(this)">SM & Economics</div>
 </div>
 
-<!-- CALENDAR VIEW -->
 <div id="calView">
   <div class="month-nav">
     <div>
@@ -596,316 +698,494 @@ body {
       <span class="month-count" id="monthCount"></span>
     </div>
     <div class="nav-btns">
-      <button class="nav-btn" id="prevBtn" onclick="changeMonth(-1)">←</button>
-      <button class="nav-btn" id="nextBtn" onclick="changeMonth(1)">→</button>
+      <button class="nav-btn" id="prevBtn" onclick="changeMonth(-1)">‹</button>
+      <button class="nav-btn" id="nextBtn" onclick="changeMonth(1)">›</button>
     </div>
   </div>
+
   <div class="month-tabs" id="monthTabs"></div>
+
   <div class="calendar-wrap">
     <div class="weekday-row">
-      <div class="wday">Sun</div><div class="wday">Mon</div><div class="wday">Tue</div>
-      <div class="wday">Wed</div><div class="wday">Thu</div><div class="wday">Fri</div><div class="wday">Sat</div>
+      <div class="wday">Sun</div>
+      <div class="wday">Mon</div>
+      <div class="wday">Tue</div>
+      <div class="wday">Wed</div>
+      <div class="wday">Thu</div>
+      <div class="wday">Fri</div>
+      <div class="wday">Sat</div>
     </div>
     <div class="calendar-grid" id="calGrid"></div>
   </div>
 </div>
 
-<!-- LIST VIEW -->
 <div class="list-view" id="listView">
   <div id="listContent"></div>
 </div>
 
-<!-- DAY MODAL -->
 <div class="overlay" id="overlay" onclick="closePanel()"></div>
 <div class="day-panel" id="dayPanel">
   <div class="panel-header">
     <div class="panel-date" id="panelDate"></div>
-    <button class="panel-close" onclick="closePanel()">✕</button>
+    <button class="panel-close" onclick="closePanel()">×</button>
   </div>
   <div class="panel-body" id="panelBody"></div>
 </div>
 
 <script>
-const EVENTS = [{"sl":1,"faculty":"Prof. Anandakuttan B Unnithan","track":2,"area":"MM & IS","code":"EMM-004","course":"Digital Product Management","date":"2026-04-20","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":2,"faculty":"Prof. Sreejesh S","track":3,"area":"MM & IS","code":"EMM-003","course":"Digital Marketing","date":"2026-04-20","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":3,"faculty":"Prof. Aishwarya Ramasundaram","track":1,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section A","date":"2026-04-20","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":4,"faculty":"Prof. M P Sebastian","track":4,"area":"MM & IS","code":"EIS-008","course":"Natural Language Processing","date":"2026-04-21","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":5,"faculty":"Prof. Priya Nair Rajeev","track":2,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section A","date":"2026-04-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":6,"faculty":"Prof. Manoranjan Dhal","track":3,"area":"FAC & OBHR","code":"EOBHR-007","course":"Negotiation and Conflict Management","date":"2026-04-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":7,"faculty":"Prof. Anubha Shekhar Sinha","track":1,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section A","date":"2026-04-23","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":8,"faculty":"Prof. Kamal Kishore Sharma","track":3,"area":"SM & Economics","code":"ESM-006","course":"Mergers, Acquisitions and Strategic Alliances","date":"2026-04-23","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":9,"faculty":"Prof. Deepa Sethi","track":3,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section A","date":"2026-04-24","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":10,"faculty":"Prof. Milind Padalkar","track":1,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section A","date":"2026-04-24","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":11,"faculty":"Prof. Ashutosh Sarkar","track":2,"area":"QMOM & HLAM","code":"EQMOM-009","course":"Supply Chain Management","date":"2026-04-24","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":12,"faculty":"Prof. Shannu Narayan","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-04-26","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":13,"faculty":"Prof. Milind Padalkar","track":3,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section B","date":"2026-04-26","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":14,"faculty":"Prof. Ashutosh Sarkar","track":2,"area":"QMOM & HLAM","code":"EQMOM-009","course":"Supply Chain Management","date":"2026-04-26","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":15,"faculty":"Prof. Rajesh Srinivas Upadhyayula","track":1,"area":"SM & Economics","code":"ESM-001","course":"Consulting","date":"2026-04-26","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":16,"faculty":"Prof. Anubha Shekhar Sinha","track":2,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section B","date":"2026-04-26","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":17,"faculty":"Prof. Radhakrishna Pillai R","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-04-26","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":18,"faculty":"Prof. Sreejesh S","track":2,"area":"MM & IS","code":"EMM-022","course":"Product Analytics","date":"2026-04-26","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":19,"faculty":"Prof. Aishwarya Ramasundaram","track":3,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section B","date":"2026-04-26","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":20,"faculty":"Prof. Anandakuttan B Unnithan","track":2,"area":"MM & IS","code":"EMM-004","course":"Digital Product Management","date":"2026-04-27","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":21,"faculty":"Prof. Pronobesh Banerjee","track":1,"area":"MM & IS","code":"EMM-019","course":"Strategic Marketing","date":"2026-04-27","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":22,"faculty":"Prof. M P Sebastian","track":4,"area":"MM & IS","code":"EIS-008","course":"Natural Language Processing","date":"2026-04-28","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":23,"faculty":"Prof. Priya Nair Rajeev","track":2,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section A","date":"2026-04-29","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":24,"faculty":"Prof. Manoranjan Dhal","track":3,"area":"FAC & OBHR","code":"EOBHR-007","course":"Negotiation and Conflict Management","date":"2026-04-29","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":25,"faculty":"Prof. Kamal Kishore Sharma","track":3,"area":"SM & Economics","code":"ESM-006","course":"Mergers, Acquisitions and Strategic Alliances","date":"2026-04-30","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":26,"faculty":"Prof. Rajesh Srinivas Upadhyayula","track":1,"area":"SM & Economics","code":"ESM-001","course":"Consulting","date":"2026-04-30","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":27,"faculty":"Prof. Anubha Shekhar Sinha","track":2,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section B","date":"2026-04-30","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":28,"faculty":"Prof. Deepa Sethi","track":4,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section B","date":"2026-05-01","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":29,"faculty":"Prof. Milind Padalkar","track":1,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section A","date":"2026-05-01","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":30,"faculty":"Prof. Priya Nair Rajeev","track":2,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section A","date":"2026-05-02","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":31,"faculty":"Prof. Milind Padalkar","track":3,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section B","date":"2026-05-03","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":32,"faculty":"Prof. Rajesh Srinivas Upadhyayula","track":1,"area":"SM & Economics","code":"ESM-001","course":"Consulting","date":"2026-05-03","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":33,"faculty":"Prof. S Subramanian","track":2,"area":"SM & Economics","code":"ESM-002","course":"Corporate Governance","date":"2026-05-03","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":34,"faculty":"Prof. Sreejesh S","track":2,"area":"MM & IS","code":"EMM-022","course":"Product Analytics","date":"2026-05-03","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":35,"faculty":"Prof. Nivedita Bhanja","track":1,"area":"MM & IS","code":"EMM-013","course":"Pricing: A Managerial Perspective","date":"2026-05-03","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":36,"faculty":"Prof. Radhakrishna Pillai R","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-05-03","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":37,"faculty":"Prof. Anandakuttan B Unnithan","track":2,"area":"MM & IS","code":"EMM-004","course":"Digital Product Management","date":"2026-05-04","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":38,"faculty":"Prof. Sreejesh S","track":3,"area":"MM & IS","code":"EMM-003","course":"Digital Marketing","date":"2026-05-04","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":39,"faculty":"Prof. Aishwarya Ramasundaram","track":1,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section A","date":"2026-05-04","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":40,"faculty":"Prof. M P Sebastian","track":4,"area":"MM & IS","code":"EIS-008","course":"Natural Language Processing","date":"2026-05-05","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":41,"faculty":"Prof. Priya Nair Rajeev","track":2,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section A","date":"2026-05-06","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":42,"faculty":"Prof. Manoranjan Dhal","track":3,"area":"FAC & OBHR","code":"EOBHR-007","course":"Negotiation and Conflict Management","date":"2026-05-06","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":43,"faculty":"Prof. Jijo Lukose P J","track":1,"area":"FAC & OBHR","code":"EFAC-013","course":"Valuation, Mergers and Acquisitions","date":"2026-05-06","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":44,"faculty":"Prof. Kamal Kishore Sharma","track":3,"area":"SM & Economics","code":"ESM-006","course":"Mergers, Acquisitions and Strategic Alliances","date":"2026-05-07","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":45,"faculty":"Prof. Rajesh Srinivas Upadhyayula","track":1,"area":"SM & Economics","code":"ESM-001","course":"Consulting","date":"2026-05-07","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":46,"faculty":"Prof. Deepa Sethi","track":3,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section A","date":"2026-05-08","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":47,"faculty":"Prof. Shannu Narayan","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-05-08","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":48,"faculty":"Prof. Thangamani G","track":2,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section B","date":"2026-05-08","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":49,"faculty":"Prof. Milind Padalkar","track":1,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section A","date":"2026-05-08","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":50,"faculty":"Prof. Priya Nair Rajeev","track":2,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section A","date":"2026-05-09","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":51,"faculty":"Prof. Manoranjan Dhal","track":3,"area":"FAC & OBHR","code":"EOBHR-007","course":"Negotiation and Conflict Management","date":"2026-05-09","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":52,"faculty":"Prof. Ashutosh Sarkar","track":2,"area":"QMOM & HLAM","code":"EQMOM-009","course":"Supply Chain Management","date":"2026-05-10","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":53,"faculty":"Prof. Shannu Narayan","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-05-10","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":54,"faculty":"Prof. Thangamani G","track":1,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section A","date":"2026-05-10","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":55,"faculty":"Prof. Rajesh Srinivas Upadhyayula","track":1,"area":"SM & Economics","code":"ESM-001","course":"Consulting","date":"2026-05-10","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":56,"faculty":"Prof. S Subramanian","track":2,"area":"SM & Economics","code":"ESM-002","course":"Corporate Governance","date":"2026-05-10","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":57,"faculty":"Prof. Sreejesh S","track":2,"area":"MM & IS","code":"EMM-022","course":"Product Analytics","date":"2026-05-10","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":58,"faculty":"Prof. Aishwarya Ramasundaram","track":1,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section A","date":"2026-05-10","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":59,"faculty":"Dr.V N Rajesh","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-05-10","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":60,"faculty":"Prof. Anandakuttan B Unnithan","track":2,"area":"MM & IS","code":"EMM-004","course":"Digital Product Management","date":"2026-05-11","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":61,"faculty":"Prof. Aishwarya Ramasundaram","track":3,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section B","date":"2026-05-11","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":62,"faculty":"Prof. Nivedita Bhanja","track":1,"area":"MM & IS","code":"EMM-013","course":"Pricing: A Managerial Perspective","date":"2026-05-11","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":63,"faculty":"Prof. Radhakrishna Pillai R","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-05-12","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":64,"faculty":"Prof. Jijo Lukose P J","track":1,"area":"FAC & OBHR","code":"EFAC-013","course":"Valuation, Mergers and Acquisitions","date":"2026-05-13","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":65,"faculty":"Prof. Sudhanshu Maheshwari","track":2,"area":"FAC & OBHR","code":"EOBHR-009","course":"Performance and Talent Management","date":"2026-05-13","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":66,"faculty":"Prof. Priya Nair Rajeev","track":3,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section B","date":"2026-05-13","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":67,"faculty":"Prof. Kamal Kishore Sharma","track":2,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section B","date":"2026-05-14","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":68,"faculty":"Prof. Anubha Shekhar Sinha","track":1,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section A","date":"2026-05-14","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":69,"faculty":"Prof. Deepa Sethi","track":4,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section B","date":"2026-05-15","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":70,"faculty":"Prof. Milind Padalkar","track":1,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section A","date":"2026-05-15","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":71,"faculty":"Prof. Ashutosh Sarkar","track":2,"area":"QMOM & HLAM","code":"EQMOM-009","course":"Supply Chain Management","date":"2026-05-15","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":72,"faculty":"Prof. Priya Nair Rajeev","track":3,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section B","date":"2026-05-16","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":73,"faculty":"Prof. Ashutosh Sarkar","track":2,"area":"QMOM & HLAM","code":"EQMOM-009","course":"Supply Chain Management","date":"2026-05-17","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":74,"faculty":"Prof. Thangamani G","track":1,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section A","date":"2026-05-17","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":75,"faculty":"Prof. Milind Padalkar","track":3,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section B","date":"2026-05-17","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":76,"faculty":"Prof. M P Sebastian","track":4,"area":"MM & IS","code":"EIS-008","course":"Natural Language Processing","date":"2026-05-17","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":77,"faculty":"Prof. Anandakuttan B Unnithan","track":2,"area":"MM & IS","code":"EMM-004","course":"Digital Product Management","date":"2026-05-17","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":78,"faculty":"Prof. Aishwarya Ramasundaram","track":1,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section A","date":"2026-05-17","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":79,"faculty":"Prof. Pronobesh Banerjee","track":1,"area":"MM & IS","code":"EMM-019","course":"Strategic Marketing","date":"2026-05-18","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":80,"faculty":"Prof. Sreejesh S","track":2,"area":"MM & IS","code":"EMM-022","course":"Product Analytics","date":"2026-05-18","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":81,"faculty":"Prof. Aishwarya Ramasundaram","track":3,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section B","date":"2026-05-18","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":82,"faculty":"Prof. Jijo Lukose P J","track":1,"area":"FAC & OBHR","code":"EFAC-013","course":"Valuation, Mergers and Acquisitions","date":"2026-05-20","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":83,"faculty":"Prof. Sudhanshu Maheshwari","track":3,"area":"FAC & OBHR","code":"EOBHR-012","course":"Mapping Managerial Excellence: Insights from the Bhagavad Gita","date":"2026-05-20","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":84,"faculty":"Prof. Kamal Kishore Sharma","track":1,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section A","date":"2026-05-21","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":85,"faculty":"Prof. S Subramanian","track":2,"area":"SM & Economics","code":"ESM-002","course":"Corporate Governance","date":"2026-05-21","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":86,"faculty":"Prof. Ram Kumar P N","track":1,"area":"QMOM & HLAM","code":"EQMOM-001","course":"Advanced Operations Research","date":"2026-05-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":87,"faculty":"Prof. Deepa Sethi","track":3,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section A","date":"2026-05-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":88,"faculty":"Prof. Shannu Narayan","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-05-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":89,"faculty":"Prof. Thangamani G","track":2,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section B","date":"2026-05-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":90,"faculty":"Prof. Sudhanshu Maheshwari","track":2,"area":"FAC & OBHR","code":"EOBHR-009","course":"Performance and Talent Management","date":"2026-05-23","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":91,"faculty":"Prof. Priya Nair Rajeev","track":3,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section B","date":"2026-05-23","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":92,"faculty":"Prof. Ekta Sikarwar","track":1,"area":"FAC & OBHR","code":"EFAC-006","course":"International Finance","date":"2026-05-23","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":93,"faculty":"Prof. Ram Kumar P N","track":1,"area":"QMOM & HLAM","code":"EQMOM-001","course":"Advanced Operations Research","date":"2026-05-24","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":94,"faculty":"Prof. Milind Padalkar","track":3,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section B","date":"2026-05-24","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":95,"faculty":"Prof. Kamal Kishore Sharma","track":3,"area":"SM & Economics","code":"ESM-006","course":"Mergers, Acquisitions and Strategic Alliances","date":"2026-05-24","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":96,"faculty":"Prof. Dharun Kasilingam","track":2,"area":"MM & IS","code":"EMM-007","course":"Marketing Analytics: Tools and Techniques for Decision Making and Automation","date":"2026-05-24","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":97,"faculty":"Prof. Sreejesh S","track":3,"area":"MM & IS","code":"EMM-003","course":"Digital Marketing","date":"2026-05-24","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":98,"faculty":"Prof. Pronobesh Banerjee","track":1,"area":"MM & IS","code":"EMM-019","course":"Strategic Marketing","date":"2026-05-25","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":99,"faculty":"Prof. Aishwarya Ramasundaram","track":3,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section B","date":"2026-05-25","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":100,"faculty":"Prof. M P Sebastian","track":4,"area":"MM & IS","code":"EIS-008","course":"Natural Language Processing","date":"2026-05-26","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":101,"faculty":"Prof. Kamal Kishore Sharma","track":2,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section B","date":"2026-05-28","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":102,"faculty":"Prof. Ram Kumar P N","track":1,"area":"QMOM & HLAM","code":"EQMOM-001","course":"Advanced Operations Research","date":"2026-05-29","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":103,"faculty":"Prof. Deepa Sethi","track":4,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section B","date":"2026-05-29","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":104,"faculty":"Prof. Thangamani G","track":2,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section B","date":"2026-05-29","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":105,"faculty":"Prof. Sudhanshu Maheshwari","track":3,"area":"FAC & OBHR","code":"EOBHR-012","course":"Mapping Managerial Excellence: Insights from the Bhagavad Gita","date":"2026-05-30","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":106,"faculty":"Prof. Ekta Sikarwar","track":1,"area":"FAC & OBHR","code":"EFAC-006","course":"International Finance","date":"2026-05-30","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":107,"faculty":"Prof. Thangamani G","track":1,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section A","date":"2026-05-31","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":108,"faculty":"Prof. Kamal Kishore Sharma","track":1,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section A","date":"2026-05-31","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":109,"faculty":"Prof. Pronobesh Banerjee","track":1,"area":"MM & IS","code":"EMM-019","course":"Strategic Marketing","date":"2026-05-31","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":110,"faculty":"Prof. Dharun Kasilingam","track":2,"area":"MM & IS","code":"EMM-007","course":"Marketing Analytics: Tools and Techniques for Decision Making and Automation","date":"2026-05-31","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":111,"faculty":"Prof. Sreejesh S","track":3,"area":"MM & IS","code":"EMM-003","course":"Digital Marketing","date":"2026-05-31","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":112,"faculty":"Prof. Pronobesh Banerjee","track":1,"area":"MM & IS","code":"EMM-019","course":"Strategic Marketing","date":"2026-06-01","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":113,"faculty":"Prof. Dharun Kasilingam","track":2,"area":"MM & IS","code":"EMM-007","course":"Marketing Analytics: Tools and Techniques for Decision Making and Automation","date":"2026-06-01","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":114,"faculty":"Prof. Jijo Lukose P J","track":1,"area":"FAC & OBHR","code":"EFAC-013","course":"Valuation, Mergers and Acquisitions","date":"2026-06-03","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":115,"faculty":"Prof. Sudhanshu Maheshwari","track":2,"area":"FAC & OBHR","code":"EOBHR-009","course":"Performance and Talent Management","date":"2026-06-03","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":116,"faculty":"Prof. Priya Nair Rajeev","track":3,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section B","date":"2026-06-03","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":117,"faculty":"Prof. Kamal Kishore Sharma","track":1,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section A","date":"2026-06-04","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":118,"faculty":"Prof. S Subramanian","track":2,"area":"SM & Economics","code":"ESM-002","course":"Corporate Governance","date":"2026-06-04","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":119,"faculty":"Prof. Deepa Sethi","track":3,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section A","date":"2026-06-05","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":120,"faculty":"Prof. Shannu Narayan","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-06-05","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":121,"faculty":"Prof. Ashutosh Sarkar","track":2,"area":"QMOM & HLAM","code":"EQMOM-009","course":"Supply Chain Management","date":"2026-06-05","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":122,"faculty":"Prof. Ram Kumar P N","track":1,"area":"QMOM & HLAM","code":"EQMOM-001","course":"Advanced Operations Research","date":"2026-06-05","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":123,"faculty":"Prof. Sudhanshu Maheshwari","track":3,"area":"FAC & OBHR","code":"EOBHR-012","course":"Mapping Managerial Excellence: Insights from the Bhagavad Gita","date":"2026-06-06","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":124,"faculty":"Prof. Priya Nair Rajeev","track":2,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section A","date":"2026-06-06","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":125,"faculty":"Prof. Jijo Lukose P J","track":1,"area":"FAC & OBHR","code":"EFAC-013","course":"Valuation, Mergers and Acquisitions","date":"2026-06-06","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":126,"faculty":"Prof. Ashutosh Sarkar","track":2,"area":"QMOM & HLAM","code":"EQMOM-009","course":"Supply Chain Management","date":"2026-06-07","time":"09.00 PM - 11.45 PM","remarks":""},{"sl":127,"faculty":"Prof. Ram Kumar P N","track":1,"area":"QMOM & HLAM","code":"EQMOM-001","course":"Advanced Operations Research","date":"2026-06-07","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":128,"faculty":"Prof. Shannu Narayan","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-06-07","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":129,"faculty":"Prof. Kamal Kishore Sharma","track":3,"area":"SM & Economics","code":"ESM-006","course":"Mergers, Acquisitions and Strategic Alliances","date":"2026-06-07","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":130,"faculty":"Prof. Rajesh Srinivas Upadhyayula","track":1,"area":"SM & Economics","code":"ESM-001","course":"Consulting","date":"2026-06-07","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":131,"faculty":"Prof. Pronobesh Banerjee","track":1,"area":"MM & IS","code":"EMM-019","course":"Strategic Marketing","date":"2026-06-07","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":132,"faculty":"Prof. Anandakuttan B Unnithan","track":2,"area":"MM & IS","code":"EMM-004","course":"Digital Product Management","date":"2026-06-07","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":133,"faculty":"Prof. Sreejesh S","track":3,"area":"MM & IS","code":"EMM-003","course":"Digital Marketing","date":"2026-06-07","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":134,"faculty":"Prof. M P Sebastian","track":4,"area":"MM & IS","code":"EIS-008","course":"Natural Language Processing","date":"2026-06-07","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":135,"faculty":"Prof. Dharun Kasilingam","track":2,"area":"MM & IS","code":"EMM-007","course":"Marketing Analytics: Tools and Techniques for Decision Making and Automation","date":"2026-06-08","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":136,"faculty":"Prof. Aishwarya Ramasundaram","track":1,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section A","date":"2026-06-08","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":137,"faculty":"Dr.V N Rajesh","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-06-09","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":138,"faculty":"Prof. Sudhanshu Maheshwari","track":2,"area":"FAC & OBHR","code":"EOBHR-009","course":"Performance and Talent Management","date":"2026-06-10","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":139,"faculty":"Prof. Priya Nair Rajeev","track":3,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section B","date":"2026-06-10","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":140,"faculty":"Prof. Kamal Kishore Sharma","track":2,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section B","date":"2026-06-11","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":141,"faculty":"Prof. Rajesh Srinivas Upadhyayula","track":1,"area":"SM & Economics","code":"ESM-001","course":"Consulting","date":"2026-06-11","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":142,"faculty":"Prof. Deepa Sethi","track":4,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section B","date":"2026-06-12","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":143,"faculty":"Prof. Thangamani G","track":1,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section A","date":"2026-06-12","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":144,"faculty":"Prof. Ashutosh Sarkar","track":2,"area":"QMOM & HLAM","code":"EQMOM-009","course":"Supply Chain Management","date":"2026-06-12","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":145,"faculty":"Prof. Milind Padalkar","track":3,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section B","date":"2026-06-12","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":146,"faculty":"Prof. Sudhanshu Maheshwari","track":3,"area":"FAC & OBHR","code":"EOBHR-012","course":"Mapping Managerial Excellence: Insights from the Bhagavad Gita","date":"2026-06-13","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":147,"faculty":"Prof. Roopak Kumar Gupta","track":2,"area":"FAC & OBHR","code":"EOBHR-001","course":"Creativity and Innovation","date":"2026-06-13","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":148,"faculty":"Prof. Jijo Lukose P J","track":1,"area":"FAC & OBHR","code":"EFAC-013","course":"Valuation, Mergers and Acquisitions","date":"2026-06-13","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":149,"faculty":"Prof. Thangamani G","track":2,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section B","date":"2026-06-14","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":150,"faculty":"Prof. Milind Padalkar","track":1,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section A","date":"2026-06-14","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":151,"faculty":"Prof. Deva Prasad M","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-06-14","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":152,"faculty":"Prof. Kamal Kishore Sharma","track":3,"area":"SM & Economics","code":"ESM-006","course":"Mergers, Acquisitions and Strategic Alliances","date":"2026-06-14","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":153,"faculty":"Prof. S Subramanian","track":2,"area":"SM & Economics","code":"ESM-002","course":"Corporate Governance","date":"2026-06-14","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":154,"faculty":"Prof. Pronobesh Banerjee","track":1,"area":"MM & IS","code":"EMM-019","course":"Strategic Marketing","date":"2026-06-14","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":155,"faculty":"Prof. Anandakuttan B Unnithan","track":2,"area":"MM & IS","code":"EMM-004","course":"Digital Product Management","date":"2026-06-14","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":156,"faculty":"Prof. Aishwarya Ramasundaram","track":3,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section B","date":"2026-06-14","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":157,"faculty":"Prof. M P Sebastian","track":4,"area":"MM & IS","code":"EIS-008","course":"Natural Language Processing","date":"2026-06-14","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":158,"faculty":"Prof. Dharun Kasilingam","track":2,"area":"MM & IS","code":"EMM-007","course":"Marketing Analytics: Tools and Techniques for Decision Making and Automation","date":"2026-06-15","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":159,"faculty":"Prof. Nivedita Bhanja","track":1,"area":"MM & IS","code":"EMM-013","course":"Pricing: A Managerial Perspective","date":"2026-06-15","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":160,"faculty":"Dr.V N Rajesh","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-06-16","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":161,"faculty":"Prof. Sudhanshu Maheshwari","track":2,"area":"FAC & OBHR","code":"EOBHR-009","course":"Performance and Talent Management","date":"2026-06-17","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":162,"faculty":"Prof. Ekta Sikarwar","track":1,"area":"FAC & OBHR","code":"EFAC-006","course":"International Finance","date":"2026-06-17","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":163,"faculty":"Prof. Manoranjan Dhal","track":3,"area":"FAC & OBHR","code":"EOBHR-007","course":"Negotiation and Conflict Management","date":"2026-06-17","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":164,"faculty":"Prof. Thangamani G","track":1,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section A","date":"2026-06-19","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":165,"faculty":"Prof. Deepa Sethi","track":3,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section A","date":"2026-06-19","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":166,"faculty":"Prof. Sudhanshu Maheshwari","track":3,"area":"FAC & OBHR","code":"EOBHR-012","course":"Mapping Managerial Excellence: Insights from the Bhagavad Gita","date":"2026-06-20","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":167,"faculty":"Prof. Roopak Kumar Gupta","track":2,"area":"FAC & OBHR","code":"EOBHR-001","course":"Creativity and Innovation","date":"2026-06-20","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":168,"faculty":"Prof. Ekta Sikarwar","track":1,"area":"FAC & OBHR","code":"EFAC-006","course":"International Finance","date":"2026-06-20","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":169,"faculty":"Prof. Thangamani G","track":2,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section B","date":"2026-06-21","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":170,"faculty":"Prof. Deva Prasad M","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-06-21","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":171,"faculty":"Prof. Milind Padalkar","track":1,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section A","date":"2026-06-21","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":172,"faculty":"Prof. Kamal Kishore Sharma","track":2,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section B","date":"2026-06-21","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":173,"faculty":"Prof. Anandakuttan B Unnithan","track":2,"area":"MM & IS","code":"EMM-004","course":"Digital Product Management","date":"2026-06-21","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":174,"faculty":"Prof. Nivedita Bhanja","track":1,"area":"MM & IS","code":"EMM-013","course":"Pricing: A Managerial Perspective","date":"2026-06-21","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":175,"faculty":"Prof. Sreejesh S","track":3,"area":"MM & IS","code":"EMM-003","course":"Digital Marketing","date":"2026-06-21","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":176,"faculty":"Prof. M P Sebastian","track":4,"area":"MM & IS","code":"EIS-008","course":"Natural Language Processing","date":"2026-06-21","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":177,"faculty":"Prof. Nivedita Bhanja","track":1,"area":"MM & IS","code":"EMM-013","course":"Pricing: A Managerial Perspective","date":"2026-06-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":178,"faculty":"Prof. Sreejesh S","track":2,"area":"MM & IS","code":"EMM-022","course":"Product Analytics","date":"2026-06-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":179,"faculty":"Prof. Aishwarya Ramasundaram","track":3,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section B","date":"2026-06-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":180,"faculty":"Dr.V N Rajesh","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-06-23","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":181,"faculty":"Prof. Ekta Sikarwar","track":1,"area":"FAC & OBHR","code":"EFAC-006","course":"International Finance","date":"2026-06-24","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":182,"faculty":"Prof. Priya Nair Rajeev","track":2,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section A","date":"2026-06-24","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":183,"faculty":"Prof. Rajesh Srinivas Upadhyayula","track":1,"area":"SM & Economics","code":"ESM-001","course":"Consulting","date":"2026-06-25","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":184,"faculty":"Prof. S Subramanian","track":2,"area":"SM & Economics","code":"ESM-002","course":"Corporate Governance","date":"2026-06-25","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":185,"faculty":"Prof. Thangamani G","track":1,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section A","date":"2026-06-26","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":186,"faculty":"Prof. Deepa Sethi","track":3,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section A","date":"2026-06-26","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":187,"faculty":"Prof. Deva Prasad M","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-06-26","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":188,"faculty":"Prof. Roopak Kumar Gupta","track":2,"area":"FAC & OBHR","code":"EOBHR-001","course":"Creativity and Innovation","date":"2026-06-27","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":189,"faculty":"Prof. Priya Nair Rajeev","track":3,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section B","date":"2026-06-27","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":190,"faculty":"Prof. Deepa Sethi","track":3,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section A","date":"2026-06-28","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":191,"faculty":"Prof. Thangamani G","track":2,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section B","date":"2026-06-28","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":192,"faculty":"Prof. Milind Padalkar","track":1,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section A","date":"2026-06-28","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":193,"faculty":"Prof. Anubha Shekhar Sinha","track":2,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section B","date":"2026-06-28","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":194,"faculty":"Prof. Kamal Kishore Sharma","track":1,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section A","date":"2026-06-28","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":195,"faculty":"Dr.V N Rajesh","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-06-28","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":196,"faculty":"Prof. Sreejesh S","track":3,"area":"MM & IS","code":"EMM-003","course":"Digital Marketing","date":"2026-06-28","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":197,"faculty":"Prof. Aishwarya Ramasundaram","track":1,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section A","date":"2026-06-28","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":198,"faculty":"Prof. Sreejesh S","track":2,"area":"MM & IS","code":"EMM-022","course":"Product Analytics","date":"2026-06-29","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":199,"faculty":"Prof. Aishwarya Ramasundaram","track":1,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section A","date":"2026-06-29","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":200,"faculty":"Dr.V N Rajesh","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-06-30","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":201,"faculty":"Prof. Roopak Kumar Gupta","track":2,"area":"FAC & OBHR","code":"EOBHR-001","course":"Creativity and Innovation","date":"2026-07-01","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":202,"faculty":"Prof. Priya Nair Rajeev","track":3,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section B","date":"2026-07-01","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":203,"faculty":"Prof. Kamal Kishore Sharma","track":3,"area":"SM & Economics","code":"ESM-006","course":"Mergers, Acquisitions and Strategic Alliances","date":"2026-07-02","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":204,"faculty":"Prof. S Subramanian","track":2,"area":"SM & Economics","code":"ESM-002","course":"Corporate Governance","date":"2026-07-02","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":205,"faculty":"Prof. Ram Kumar P N","track":1,"area":"QMOM & HLAM","code":"EQMOM-001","course":"Advanced Operations Research","date":"2026-07-03","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":206,"faculty":"Prof. Milind Padalkar","track":3,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section B","date":"2026-07-03","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":207,"faculty":"Prof. Deva Prasad M","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-07-03","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":208,"faculty":"Prof. Jijo Lukose P J","track":1,"area":"FAC & OBHR","code":"EFAC-013","course":"Valuation, Mergers and Acquisitions","date":"2026-07-04","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":209,"faculty":"Prof. Sudhanshu Maheshwari","track":2,"area":"FAC & OBHR","code":"EOBHR-009","course":"Performance and Talent Management","date":"2026-07-04","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":210,"faculty":"Prof. Priya Nair Rajeev","track":3,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section B","date":"2026-07-04","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":211,"faculty":"Prof. Deepa Sethi","track":4,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section B","date":"2026-07-05","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":212,"faculty":"Prof. Milind Padalkar","track":1,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section A","date":"2026-07-05","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":213,"faculty":"Prof. Anubha Shekhar Sinha","track":1,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section A","date":"2026-07-05","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":214,"faculty":"Prof. S Subramanian","track":2,"area":"SM & Economics","code":"ESM-002","course":"Corporate Governance","date":"2026-07-05","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":215,"faculty":"Prof. Pronobesh Banerjee","track":1,"area":"MM & IS","code":"EMM-019","course":"Strategic Marketing","date":"2026-07-05","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":216,"faculty":"Prof. Sreejesh S","track":2,"area":"MM & IS","code":"EMM-022","course":"Product Analytics","date":"2026-07-05","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":217,"faculty":"Prof. Aishwarya Ramasundaram","track":3,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section B","date":"2026-07-05","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":218,"faculty":"Dr.V N Rajesh","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-07-05","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":219,"faculty":"Prof. Dharun Kasilingam","track":2,"area":"MM & IS","code":"EMM-007","course":"Marketing Analytics: Tools and Techniques for Decision Making and Automation","date":"2026-07-06","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":220,"faculty":"Prof. Nivedita Bhanja","track":1,"area":"MM & IS","code":"EMM-013","course":"Pricing: A Managerial Perspective","date":"2026-07-06","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":221,"faculty":"Prof. Sreejesh S","track":3,"area":"MM & IS","code":"EMM-003","course":"Digital Marketing","date":"2026-07-06","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":222,"faculty":"Dr.V N Rajesh","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-07-07","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":223,"faculty":"Prof. Sudhanshu Maheshwari","track":3,"area":"FAC & OBHR","code":"EOBHR-012","course":"Mapping Managerial Excellence: Insights from the Bhagavad Gita","date":"2026-07-08","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":224,"faculty":"Prof. Roopak Kumar Gupta","track":2,"area":"FAC & OBHR","code":"EOBHR-001","course":"Creativity and Innovation","date":"2026-07-08","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":225,"faculty":"Prof. Ekta Sikarwar","track":1,"area":"FAC & OBHR","code":"EFAC-006","course":"International Finance","date":"2026-07-08","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":226,"faculty":"Prof. Thangamani G","track":2,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section B","date":"2026-07-10","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":227,"faculty":"Prof. Milind Padalkar","track":3,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section B","date":"2026-07-10","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":228,"faculty":"Prof. Sudhanshu Maheshwari","track":2,"area":"FAC & OBHR","code":"EOBHR-009","course":"Performance and Talent Management","date":"2026-07-11","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":229,"faculty":"Prof. Manoranjan Dhal","track":3,"area":"FAC & OBHR","code":"EOBHR-007","course":"Negotiation and Conflict Management","date":"2026-07-11","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":230,"faculty":"Prof. Jijo Lukose P J","track":1,"area":"FAC & OBHR","code":"EFAC-013","course":"Valuation, Mergers and Acquisitions","date":"2026-07-11","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":231,"faculty":"Prof. Deepa Sethi","track":3,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section A","date":"2026-07-12","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":232,"faculty":"Prof. Deva Prasad M","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-07-12","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":233,"faculty":"Prof. Thangamani G","track":1,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section A","date":"2026-07-12","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":234,"faculty":"Prof. Kamal Kishore Sharma","track":3,"area":"SM & Economics","code":"ESM-006","course":"Mergers, Acquisitions and Strategic Alliances","date":"2026-07-12","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":235,"faculty":"Prof. Nivedita Bhanja","track":1,"area":"MM & IS","code":"EMM-013","course":"Pricing: A Managerial Perspective","date":"2026-07-12","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":236,"faculty":"Prof. Dharun Kasilingam","track":2,"area":"MM & IS","code":"EMM-007","course":"Marketing Analytics: Tools and Techniques for Decision Making and Automation","date":"2026-07-12","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":237,"faculty":"Dr.V N Rajesh","track":4,"area":"MM & IS","code":"EIS-009","course":"Responsible AI","date":"2026-07-12","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":238,"faculty":"Prof. Aishwarya Ramasundaram","track":3,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section B","date":"2026-07-12","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":239,"faculty":"Prof. Nivedita Bhanja","track":1,"area":"MM & IS","code":"EMM-013","course":"Pricing: A Managerial Perspective","date":"2026-07-13","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":240,"faculty":"Prof. Sreejesh S","track":2,"area":"MM & IS","code":"EMM-022","course":"Product Analytics","date":"2026-07-13","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":241,"faculty":"Prof. Sudhanshu Maheshwari","track":3,"area":"FAC & OBHR","code":"EOBHR-012","course":"Mapping Managerial Excellence: Insights from the Bhagavad Gita","date":"2026-07-15","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":242,"faculty":"Prof. Ekta Sikarwar","track":1,"area":"FAC & OBHR","code":"EFAC-006","course":"International Finance","date":"2026-07-15","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":243,"faculty":"Prof. Roopak Kumar Gupta","track":2,"area":"FAC & OBHR","code":"EOBHR-001","course":"Creativity and Innovation","date":"2026-07-15","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":244,"faculty":"Prof. Kamal Kishore Sharma","track":1,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section A","date":"2026-07-16","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":245,"faculty":"Prof. Deva Prasad M","track":4,"area":"QMOM & HLAM","code":"EHLAM-001","course":"Advanced Business Law","date":"2026-07-17","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":246,"faculty":"Prof. Thangamani G","track":1,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section A","date":"2026-07-17","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":247,"faculty":"Prof. Milind Padalkar","track":3,"area":"QMOM & HLAM","code":"EQMOM-006","course":"Project Management - Section B","date":"2026-07-17","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":248,"faculty":"Prof. Sudhanshu Maheshwari","track":2,"area":"FAC & OBHR","code":"EOBHR-009","course":"Performance and Talent Management","date":"2026-07-18","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":249,"faculty":"Prof. Manoranjan Dhal","track":3,"area":"FAC & OBHR","code":"EOBHR-007","course":"Negotiation and Conflict Management","date":"2026-07-18","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":250,"faculty":"Prof. Ekta Sikarwar","track":1,"area":"FAC & OBHR","code":"EFAC-006","course":"International Finance","date":"2026-07-18","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":251,"faculty":"Prof. Ram Kumar P N","track":1,"area":"QMOM & HLAM","code":"EQMOM-001","course":"Advanced Operations Research","date":"2026-07-19","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":252,"faculty":"Prof. Thangamani G","track":2,"area":"QMOM & HLAM","code":"EQMOM-002","course":"Design Thinking for Innovation and Product Development - Section B","date":"2026-07-19","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":253,"faculty":"Prof. Deepa Sethi","track":4,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section B","date":"2026-07-19","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":254,"faculty":"Prof. Kamal Kishore Sharma","track":2,"area":"SM & Economics","code":"ESM-003","course":"Entrepreneurship and New Ventures - Section B","date":"2026-07-19","time":"12.15 PM - 03.00 PM","remarks":""},{"sl":255,"faculty":"Prof. Dharun Kasilingam","track":2,"area":"MM & IS","code":"EMM-007","course":"Marketing Analytics: Tools and Techniques for Decision Making and Automation","date":"2026-07-19","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":256,"faculty":"Prof. Aishwarya Ramasundaram","track":1,"area":"MM & IS","code":"EMM-016","course":"Sales and Distribution Management - Section A","date":"2026-07-19","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":257,"faculty":"Prof. Sudhanshu Maheshwari","track":3,"area":"FAC & OBHR","code":"EOBHR-012","course":"Mapping Managerial Excellence: Insights from the Bhagavad Gita","date":"2026-07-22","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":258,"faculty":"Prof. Deepa Sethi","track":4,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section B","date":"2026-07-24","time":"07.00 PM - 09.45 PM","remarks":""},{"sl":259,"faculty":"Prof. Priya Nair Rajeev","track":2,"area":"FAC & OBHR","code":"EOBHR-003","course":"Emotional Intelligence for Managerial Effectiveness - Section A","date":"2026-07-25","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":260,"faculty":"Prof. Manoranjan Dhal","track":3,"area":"FAC & OBHR","code":"EOBHR-007","course":"Negotiation and Conflict Management","date":"2026-07-25","time":"03.30 PM - 06.15 PM","remarks":""},{"sl":261,"faculty":"Prof. Deepa Sethi","track":4,"area":"QMOM & HLAM","code":"EHLAM-010","course":"Executive Presence, Influence and Storytelling - Section B","date":"2026-07-26","time":"09.00 AM - 11.45 AM","remarks":""},{"sl":262,"faculty":"Prof. Ram Kumar P N","track":1,"area":"QMOM & HLAM","code":"EQMOM-001","course":"Advanced Operations Research","date":"2026-07-26","time":"09.00 AM - 11.45 AM","remarks":""}];
-
-const MONTHS = [
-  {name:'April', year:2026, month:3},
-  {name:'May',   year:2026, month:4},
-  {name:'June',  year:2026, month:5},
-  {name:'July',  year:2026, month:6},
+const EVENTS = [
+  { sl:1, faculty:"Prof. Anandakuttan B Unnithan", track:"2", area:"MM & IS", code:"EMM-004", course:"Digital Product Management", date:"2026-04-20", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:2, faculty:"Prof. Sreejesh S", track:"3", area:"MM & IS", code:"EMM-003", course:"Digital Marketing", date:"2026-04-20", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:3, faculty:"Prof. Aishwarya Ramasundaram", track:"1", area:"MM & IS", code:"EMM-016", course:"Sales and Distribution Management - Section A", date:"2026-04-20", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:4, faculty:"Prof. M P Sebastian", track:"4", area:"MM & IS", code:"EIS-008", course:"Natural Language Processing", date:"2026-04-21", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:5, faculty:"Prof. Priya Nair Rajeev", track:"2", area:"FAC & OBHR", code:"EOBHR-003", course:"Emotional Intelligence for Managerial Effectiveness - Section A", date:"2026-04-22", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:6, faculty:"Prof. Manoranjan Dhal", track:"3", area:"FAC & OBHR", code:"EOBHR-007", course:"Negotiation and Conflict Management", date:"2026-04-22", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:7, faculty:"Prof. Anubha Shekhar Sinha", track:"1", area:"SM & Economics", code:"ESM-003", course:"Entrepreneurship and New Ventures - Section A", date:"2026-04-23", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:8, faculty:"Prof. Kamal Kishore Sharma", track:"3", area:"SM & Economics", code:"ESM-006", course:"Mergers, Acquisitions and Strategic Alliances", date:"2026-04-23", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:9, faculty:"Prof. Deepa Sethi", track:"3", area:"QMOM & HLAM", code:"EHLAM-010", course:"Executive Presence, Influence and Storytelling - Section A", date:"2026-04-24", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:10, faculty:"Prof. Milind Padalkar", track:"1", area:"QMOM & HLAM", code:"EQMOM-006", course:"Project Management - Section A", date:"2026-04-24", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:11, faculty:"Prof. Ashutosh Sarkar", track:"2", area:"QMOM & HLAM", code:"EQMOM-009", course:"Supply Chain Management", date:"2026-04-24", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:12, faculty:"Prof. Shannu Narayan", track:"4", area:"QMOM & HLAM", code:"EHLAM-001", course:"Advanced Business Law", date:"2026-04-26", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:13, faculty:"Prof. Milind Padalkar", track:"3", area:"QMOM & HLAM", code:"EQMOM-006", course:"Project Management - Section B", date:"2026-04-26", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:14, faculty:"Prof. Ashutosh Sarkar", track:"2", area:"QMOM & HLAM", code:"EQMOM-009", course:"Supply Chain Management", date:"2026-04-26", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:15, faculty:"Prof. Rajesh Srinivas Upadhyayula", track:"1", area:"SM & Economics", code:"ESM-001", course:"Consulting", date:"2026-04-26", time:"12.15 PM - 03.00 PM", remarks:"" },
+  { sl:16, faculty:"Prof. Anubha Shekhar Sinha", track:"2", area:"SM & Economics", code:"ESM-003", course:"Entrepreneurship and New Ventures - Section B", date:"2026-04-26", time:"12.15 PM - 03.00 PM", remarks:"" },
+  { sl:17, faculty:"Prof. Radhakrishna Pillai R", track:"4", area:"MM & IS", code:"EIS-009", course:"Responsible AI", date:"2026-04-26", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:18, faculty:"Prof. Sreejesh S", track:"2", area:"MM & IS", code:"EMM-022", course:"Product Analytics", date:"2026-04-26", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:19, faculty:"Prof. Aishwarya Ramasundaram", track:"3", area:"MM & IS", code:"EMM-016", course:"Sales and Distribution Management - Section B", date:"2026-04-26", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:20, faculty:"Prof. Anandakuttan B Unnithan", track:"2", area:"MM & IS", code:"EMM-004", course:"Digital Product Management", date:"2026-04-27", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:21, faculty:"Prof. Pronobesh Banerjee", track:"1", area:"MM & IS", code:"EMM-019", course:"Strategic Marketing", date:"2026-04-27", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:22, faculty:"Prof. M P Sebastian", track:"4", area:"MM & IS", code:"EIS-008", course:"Natural Language Processing", date:"2026-04-28", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:23, faculty:"Prof. Priya Nair Rajeev", track:"2", area:"FAC & OBHR", code:"EOBHR-003", course:"Emotional Intelligence for Managerial Effectiveness - Section A", date:"2026-04-29", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:24, faculty:"Prof. Manoranjan Dhal", track:"3", area:"FAC & OBHR", code:"EOBHR-007", course:"Negotiation and Conflict Management", date:"2026-04-29", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:25, faculty:"Prof. Kamal Kishore Sharma", track:"3", area:"SM & Economics", code:"ESM-006", course:"Mergers, Acquisitions and Strategic Alliances", date:"2026-04-30", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:26, faculty:"Prof. Rajesh Srinivas Upadhyayula", track:"1", area:"SM & Economics", code:"ESM-001", course:"Consulting", date:"2026-04-30", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:27, faculty:"Prof. Anubha Shekhar Sinha", track:"2", area:"SM & Economics", code:"ESM-003", course:"Entrepreneurship and New Ventures - Section B", date:"2026-04-30", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:28, faculty:"Prof. Deepa Sethi", track:"4", area:"QMOM & HLAM", code:"EHLAM-010", course:"Executive Presence, Influence and Storytelling - Section B", date:"2026-05-01", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:29, faculty:"Prof. Milind Padalkar", track:"1", area:"QMOM & HLAM", code:"EQMOM-006", course:"Project Management - Section A", date:"2026-05-01", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:30, faculty:"Prof. Priya Nair Rajeev", track:"2", area:"FAC & OBHR", code:"EOBHR-003", course:"Emotional Intelligence for Managerial Effectiveness - Section A", date:"2026-05-02", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:31, faculty:"Prof. Milind Padalkar", track:"3", area:"QMOM & HLAM", code:"EQMOM-006", course:"Project Management - Section B", date:"2026-05-03", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:32, faculty:"Prof. Rajesh Srinivas Upadhyayula", track:"1", area:"SM & Economics", code:"ESM-001", course:"Consulting", date:"2026-05-03", time:"12.15 PM - 03.00 PM", remarks:"" },
+  { sl:33, faculty:"Prof. S Subramanian", track:"2", area:"SM & Economics", code:"ESM-002", course:"Corporate Governance", date:"2026-05-03", time:"12.15 PM - 03.00 PM", remarks:"" },
+  { sl:34, faculty:"Prof. Sreejesh S", track:"2", area:"MM & IS", code:"EMM-022", course:"Product Analytics", date:"2026-05-03", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:35, faculty:"Prof. Nivedita Bhanja", track:"1", area:"MM & IS", code:"EMM-013", course:"Pricing A Managerial Perspective", date:"2026-05-03", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:36, faculty:"Prof. Radhakrishna Pillai R", track:"4", area:"MM & IS", code:"EIS-009", course:"Responsible AI", date:"2026-05-03", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:37, faculty:"Prof. Anandakuttan B Unnithan", track:"2", area:"MM & IS", code:"EMM-004", course:"Digital Product Management", date:"2026-05-04", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:38, faculty:"Prof. Sreejesh S", track:"3", area:"MM & IS", code:"EMM-003", course:"Digital Marketing", date:"2026-05-04", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:39, faculty:"Prof. Aishwarya Ramasundaram", track:"1", area:"MM & IS", code:"EMM-016", course:"Sales and Distribution Management - Section A", date:"2026-05-04", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:40, faculty:"Prof. M P Sebastian", track:"4", area:"MM & IS", code:"EIS-008", course:"Natural Language Processing", date:"2026-05-05", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:41, faculty:"Prof. Priya Nair Rajeev", track:"2", area:"FAC & OBHR", code:"EOBHR-003", course:"Emotional Intelligence for Managerial Effectiveness - Section A", date:"2026-05-06", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:42, faculty:"Prof. Manoranjan Dhal", track:"3", area:"FAC & OBHR", code:"EOBHR-007", course:"Negotiation and Conflict Management", date:"2026-05-06", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:43, faculty:"Prof. Jijo Lukose P J", track:"1", area:"FAC & OBHR", code:"EFAC-013", course:"Valuation, Mergers and Acquisitions", date:"2026-05-06", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:44, faculty:"Prof. Kamal Kishore Sharma", track:"3", area:"SM & Economics", code:"ESM-006", course:"Mergers, Acquisitions and Strategic Alliances", date:"2026-05-07", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:45, faculty:"Prof. Rajesh Srinivas Upadhyayula", track:"1", area:"SM & Economics", code:"ESM-001", course:"Consulting", date:"2026-05-07", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:46, faculty:"Prof. Deepa Sethi", track:"3", area:"QMOM & HLAM", code:"EHLAM-010", course:"Executive Presence, Influence and Storytelling - Section A", date:"2026-05-08", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:47, faculty:"Prof. Shannu Narayan", track:"4", area:"QMOM & HLAM", code:"EHLAM-001", course:"Advanced Business Law", date:"2026-05-08", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:48, faculty:"Prof. Thangamani G", track:"2", area:"QMOM & HLAM", code:"EQMOM-002", course:"Design Thinking for Innovation and Product Development - Section B", date:"2026-05-08", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:49, faculty:"Prof. Milind Padalkar", track:"1", area:"QMOM & HLAM", code:"EQMOM-006", course:"Project Management - Section A", date:"2026-05-08", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:50, faculty:"Prof. Priya Nair Rajeev", track:"2", area:"FAC & OBHR", code:"EOBHR-003", course:"Emotional Intelligence for Managerial Effectiveness - Section A", date:"2026-05-09", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:51, faculty:"Prof. Manoranjan Dhal", track:"3", area:"FAC & OBHR", code:"EOBHR-007", course:"Negotiation and Conflict Management", date:"2026-05-09", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:52, faculty:"Prof. Ashutosh Sarkar", track:"2", area:"QMOM & HLAM", code:"EQMOM-009", course:"Supply Chain Management", date:"2026-05-10", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:53, faculty:"Prof. Shannu Narayan", track:"4", area:"QMOM & HLAM", code:"EHLAM-001", course:"Advanced Business Law", date:"2026-05-10", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:54, faculty:"Prof. Thangamani G", track:"1", area:"QMOM & HLAM", code:"EQMOM-002", course:"Design Thinking for Innovation and Product Development - Section A", date:"2026-05-10", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:55, faculty:"Prof. Rajesh Srinivas Upadhyayula", track:"1", area:"SM & Economics", code:"ESM-001", course:"Consulting", date:"2026-05-10", time:"12.15 PM - 03.00 PM", remarks:"" },
+  { sl:56, faculty:"Prof. S Subramanian", track:"2", area:"SM & Economics", code:"ESM-002", course:"Corporate Governance", date:"2026-05-10", time:"12.15 PM - 03.00 PM", remarks:"" },
+  { sl:57, faculty:"Prof. Sreejesh S", track:"2", area:"MM & IS", code:"EMM-022", course:"Product Analytics", date:"2026-05-10", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:58, faculty:"Prof. Aishwarya Ramasundaram", track:"1", area:"MM & IS", code:"EMM-016", course:"Sales and Distribution Management - Section A", date:"2026-05-10", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:59, faculty:"Dr.V N Rajesh", track:"4", area:"MM & IS", code:"EIS-009", course:"Responsible AI", date:"2026-05-10", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:60, faculty:"Prof. Anandakuttan B Unnithan", track:"2", area:"MM & IS", code:"EMM-004", course:"Digital Product Management", date:"2026-05-11", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:61, faculty:"Prof. Aishwarya Ramasundaram", track:"3", area:"MM & IS", code:"EMM-016", course:"Sales and Distribution Management - Section B", date:"2026-05-11", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:62, faculty:"Prof. Nivedita Bhanja", track:"1", area:"MM & IS", code:"EMM-013", course:"Pricing A Managerial Perspective", date:"2026-05-11", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:63, faculty:"Prof. Radhakrishna Pillai R", track:"4", area:"MM & IS", code:"EIS-009", course:"Responsible AI", date:"2026-05-12", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:64, faculty:"Prof. Jijo Lukose P J", track:"1", area:"FAC & OBHR", code:"EFAC-013", course:"Valuation, Mergers and Acquisitions", date:"2026-05-13", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:65, faculty:"Prof. Sudhanshu Maheshwari", track:"2", area:"FAC & OBHR", code:"EOBHR-009", course:"Performance and Talent Management", date:"2026-05-13", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:66, faculty:"Prof. Priya Nair Rajeev", track:"3", area:"FAC & OBHR", code:"EOBHR-003", course:"Emotional Intelligence for Managerial Effectiveness - Section B", date:"2026-05-13", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:67, faculty:"Prof. Kamal Kishore Sharma", track:"2", area:"SM & Economics", code:"ESM-003", course:"Entrepreneurship and New Ventures - Section B", date:"2026-05-14", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:68, faculty:"Prof. Anubha Shekhar Sinha", track:"1", area:"SM & Economics", code:"ESM-003", course:"Entrepreneurship and New Ventures - Section A", date:"2026-05-14", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:69, faculty:"Prof. Deepa Sethi", track:"4", area:"QMOM & HLAM", code:"EHLAM-010", course:"Executive Presence, Influence and Storytelling - Section B", date:"2026-05-15", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:70, faculty:"Prof. Milind Padalkar", track:"1", area:"QMOM & HLAM", code:"EQMOM-006", course:"Project Management - Section A", date:"2026-05-15", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:71, faculty:"Prof. Ashutosh Sarkar", track:"2", area:"QMOM & HLAM", code:"EQMOM-009", course:"Supply Chain Management", date:"2026-05-15", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:72, faculty:"Prof. Priya Nair Rajeev", track:"3", area:"FAC & OBHR", code:"EOBHR-003", course:"Emotional Intelligence for Managerial Effectiveness - Section B", date:"2026-05-16", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:73, faculty:"Prof. Ashutosh Sarkar", track:"2", area:"QMOM & HLAM", code:"EQMOM-009", course:"Supply Chain Management", date:"2026-05-17", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:74, faculty:"Prof. Thangamani G", track:"1", area:"QMOM & HLAM", code:"EQMOM-002", course:"Design Thinking for Innovation and Product Development - Section A", date:"2026-05-17", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:75, faculty:"Prof. Milind Padalkar", track:"3", area:"QMOM & HLAM", code:"EQMOM-006", course:"Project Management - Section B", date:"2026-05-17", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:76, faculty:"Prof. M P Sebastian", track:"4", area:"MM & IS", code:"EIS-008", course:"Natural Language Processing", date:"2026-05-17", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:77, faculty:"Prof. Anandakuttan B Unnithan", track:"2", area:"MM & IS", code:"EMM-004", course:"Digital Product Management", date:"2026-05-17", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:78, faculty:"Prof. Aishwarya Ramasundaram", track:"1", area:"MM & IS", code:"EMM-016", course:"Sales and Distribution Management - Section A", date:"2026-05-17", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:79, faculty:"Prof. Pronobesh Banerjee", track:"1", area:"MM & IS", code:"EMM-019", course:"Strategic Marketing", date:"2026-05-18", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:80, faculty:"Prof. Sreejesh S", track:"2", area:"MM & IS", code:"EMM-022", course:"Product Analytics", date:"2026-05-18", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:81, faculty:"Prof. Aishwarya Ramasundaram", track:"3", area:"MM & IS", code:"EMM-016", course:"Sales and Distribution Management - Section B", date:"2026-05-18", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:82, faculty:"Prof. Jijo Lukose P J", track:"1", area:"FAC & OBHR", code:"EFAC-013", course:"Valuation, Mergers and Acquisitions", date:"2026-05-20", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:83, faculty:"Prof. Sudhanshu Maheshwari", track:"3", area:"FAC & OBHR", code:"EOBHR-012", course:"Mapping Managerial Excellence Insights from the Bhagavad Gita", date:"2026-05-20", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:84, faculty:"Prof. Kamal Kishore Sharma", track:"1", area:"SM & Economics", code:"ESM-003", course:"Entrepreneurship and New Ventures - Section A", date:"2026-05-21", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:85, faculty:"Prof. S Subramanian", track:"2", area:"SM & Economics", code:"ESM-002", course:"Corporate Governance", date:"2026-05-21", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:86, faculty:"Prof. Ram Kumar P N", track:"1", area:"QMOM & HLAM", code:"EQMOM-001", course:"Advanced Operations Research", date:"2026-05-22", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:87, faculty:"Prof. Deepa Sethi", track:"3", area:"QMOM & HLAM", code:"EHLAM-010", course:"Executive Presence, Influence and Storytelling - Section A", date:"2026-05-22", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:88, faculty:"Prof. Shannu Narayan", track:"4", area:"QMOM & HLAM", code:"EHLAM-001", course:"Advanced Business Law", date:"2026-05-22", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:89, faculty:"Prof. Thangamani G", track:"2", area:"QMOM & HLAM", code:"EQMOM-002", course:"Design Thinking for Innovation and Product Development - Section B", date:"2026-05-22", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:90, faculty:"Prof. Sudhanshu Maheshwari", track:"2", area:"FAC & OBHR", code:"EOBHR-009", course:"Performance and Talent Management", date:"2026-05-23", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:91, faculty:"Prof. Priya Nair Rajeev", track:"3", area:"FAC & OBHR", code:"EOBHR-003", course:"Emotional Intelligence for Managerial Effectiveness - Section B", date:"2026-05-23", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:92, faculty:"Prof. Ekta Sikarwar", track:"1", area:"FAC & OBHR", code:"EFAC-006", course:"International Finance", date:"2026-05-23", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:93, faculty:"Prof. Ram Kumar P N", track:"1", area:"QMOM & HLAM", code:"EQMOM-001", course:"Advanced Operations Research", date:"2026-05-24", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:94, faculty:"Prof. Milind Padalkar", track:"3", area:"QMOM & HLAM", code:"EQMOM-006", course:"Project Management - Section B", date:"2026-05-24", time:"09.00 AM - 11.45 AM", remarks:"" },
+  { sl:95, faculty:"Prof. Kamal Kishore Sharma", track:"3", area:"SM & Economics", code:"ESM-006", course:"Mergers, Acquisitions and Strategic Alliances", date:"2026-05-24", time:"12.15 PM - 03.00 PM", remarks:"" },
+  { sl:96, faculty:"Prof. Dharun Kasilingam", track:"2", area:"MM & IS", code:"EMM-007", course:"Marketing Analytics Tools and Techniques for Decision Making and Automation", date:"2026-05-24", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:97, faculty:"Prof. Sreejesh S", track:"3", area:"MM & IS", code:"EMM-003", course:"Digital Marketing", date:"2026-05-24", time:"03.30 PM - 06.15 PM", remarks:"" },
+  { sl:98, faculty:"Prof. Pronobesh Banerjee", track:"1", area:"MM & IS", code:"EMM-019", course:"Strategic Marketing", date:"2026-05-25", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:99, faculty:"Prof. Aishwarya Ramasundaram", track:"3", area:"MM & IS", code:"EMM-016", course:"Sales and Distribution Management - Section B", date:"2026-05-25", time:"07.00 PM - 09.45 PM", remarks:"" },
+  { sl:100, faculty:"Prof. M P Sebastian", track:"4", area:"MM & IS", code:"EIS-008", course:"Natural Language Processing", date:"2026-05-26", time:"07.00 PM - 09.45 PM", remarks:"" }
 ];
-const AREA_CLASS = {'MM & IS':'area-mm','FAC & OBHR':'area-fac','QMOM & HLAM':'area-qmom','SM & Economics':'area-sm'};
-const SHORT = {
-  'Digital Product Management':'Digital Prod. Mgmt',
-  'Digital Marketing':'Digital Marketing',
-  'Sales and Distribution Management - Section A':'Sales & Dist. (A)',
-  'Sales and Distribution Management - Section B':'Sales & Dist. (B)',
-  'Natural Language Processing':'NLP',
-  'Emotional Intelligence for Managerial Effectiveness - Section A':'EI Mgmt (A)',
-  'Emotional Intelligence for Managerial Effectiveness - Section B':'EI Mgmt (B)',
-  'Negotiation and Conflict Management':'Negotiation',
-  'Entrepreneurship and New Ventures - Section A':'Entrepreneurship (A)',
-  'Entrepreneurship and New Ventures - Section B':'Entrepreneurship (B)',
-  'Mergers, Acquisitions and Strategic Alliances':'M&A Alliances',
-  'Executive Presence, Influence and Storytelling - Section A':'Exec Presence (A)',
-  'Executive Presence, Influence and Storytelling - Section B':'Exec Presence (B)',
-  'Project Management - Section A':'Project Mgmt (A)',
-  'Project Management - Section B':'Project Mgmt (B)',
-  'Supply Chain Management':'Supply Chain',
-  'Advanced Business Law':'Adv. Business Law',
-  'Consulting':'Consulting',
-  'Responsible AI':'Responsible AI',
-  'Product Analytics':'Product Analytics',
-  'Strategic Marketing':'Strategic Mktg',
-  'Pricing: A Managerial Perspective':'Pricing',
-  'Corporate Governance':'Corp. Governance',
-  'Valuation, Mergers and Acquisitions':'Valuation & M&A',
-  'Performance and Talent Management':'Perf. & Talent',
-  'Design Thinking for Innovation and Product Development - Section A':'Design Thinking (A)',
-  'Design Thinking for Innovation and Product Development - Section B':'Design Thinking (B)',
-  'Advanced Operations Research':'Adv. Ops Research',
-  'International Finance':'Intl Finance',
-  'Mapping Managerial Excellence: Insights from the Bhagavad Gita':'Bhagavad Gita Mgmt',
-  'Marketing Analytics: Tools and Techniques for Decision Making and Automation':'Mktg Analytics',
-  'Creativity and Innovation':'Creativity & Innov.',
+
+const AREA_CLASS = {
+  "MM & IS": "area-mm",
+  "FAC & OBHR": "area-fac",
+  "QMOM & HLAM": "area-qmom",
+  "SM & Economics": "area-sm"
 };
 
+const monthNames = ["April 2026", "May 2026", "June 2026", "July 2026"];
+const monthMap = [3, 4, 5, 6];
+
 let currentMonth = 0;
-let activeAreas = new Set(['MM & IS','FAC & OBHR','QMOM & HLAM','SM & Economics']);
-let currentView = 'cal';
+let activeAreas = new Set(["MM & IS","FAC & OBHR","QMOM & HLAM","SM & Economics"]);
+let activeSubjects = null;
+let currentView = "cal";
 
-// Populate filters
-const facSet = new Set(), courseSet = new Set();
-EVENTS.forEach(e => { facSet.add(e.faculty); courseSet.add(e.course); });
-const fSel = document.getElementById('filterFaculty');
-const cSel = document.getElementById('filterCourse');
-[...facSet].sort().forEach(f => { const o=document.createElement('option'); o.value=f; o.textContent=f; fSel.appendChild(o); });
-[...courseSet].sort().forEach(c => { const o=document.createElement('option'); o.value=c; o.textContent=c; cSel.appendChild(o); });
+const fSel = document.getElementById("filterFaculty");
+const tSel = document.getElementById("filterTime");
+const searchBox = document.getElementById("searchBox");
+const calGrid = document.getElementById("calGrid");
+const listContent = document.getElementById("listContent");
+const monthName = document.getElementById("monthName");
+const monthCount = document.getElementById("monthCount");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const monthTabs = document.getElementById("monthTabs");
+const overlay = document.getElementById("overlay");
+const dayPanel = document.getElementById("dayPanel");
+const panelDate = document.getElementById("panelDate");
+const panelBody = document.getElementById("panelBody");
+const btnCal = document.getElementById("btnCal");
+const btnList = document.getElementById("btnList");
+const listView = document.getElementById("listView");
+const calView = document.getElementById("calView");
+const subjectFilterBtn = document.getElementById("subjectFilterBtn");
+const subjectFilterPanel = document.getElementById("subjectFilterPanel");
+const subjectFilterList = document.getElementById("subjectFilterList");
+const subjectFilterCount = document.getElementById("subjectFilterCount");
+const subjectFilterLabel = document.getElementById("subjectFilterLabel");
 
-// Month tabs
-const tabsEl = document.getElementById('monthTabs');
-MONTHS.forEach((m,i) => {
-  const t = document.createElement('button');
-  t.className = 'month-tab' + (i===0?' active':'');
-  t.textContent = m.name;
-  t.dataset.idx = i;
-  t.onclick = () => { currentMonth = i; buildMonthTabs(); renderCalendar(); };
-  tabsEl.appendChild(t);
+const facultySet = [...new Set(EVENTS.map(e => e.faculty))].sort();
+const courseSet = [...new Set(EVENTS.map(e => e.course))].sort();
+
+facultySet.forEach(f => {
+  const o = document.createElement("option");
+  o.value = f;
+  o.textContent = f;
+  fSel.appendChild(o);
 });
 
-function buildMonthTabs() {
-  document.querySelectorAll('.month-tab').forEach((t,i) => t.classList.toggle('active', i===currentMonth));
-  document.getElementById('prevBtn').disabled = currentMonth === 0;
-  document.getElementById('nextBtn').disabled = currentMonth === MONTHS.length - 1;
+function updateSubjectSummary() {
+  const total = courseSet.length;
+  const selected = activeSubjects ? activeSubjects.size : total;
+  subjectFilterCount.textContent = selected === total ? "All" : `${selected} selected`;
+  subjectFilterLabel.textContent = selected === total ? "All Subjects" : "Selected Subjects";
+}
+
+function renderSubjectOptions() {
+  subjectFilterList.innerHTML = "";
+  courseSet.forEach(course => {
+    const id = `sub-${course.replace(/[^a-z0-9]+/gi, "-").toLowerCase()}`;
+    const label = document.createElement("label");
+    label.className = "subject-option";
+    label.htmlFor = id;
+    const checked = !activeSubjects || activeSubjects.has(course);
+
+    label.innerHTML = `
+      <input type="checkbox" id="${id}" ${checked ? "checked" : ""}>
+      <span>${course}<small>Show this subject in calendar and list view</small></span>
+    `;
+
+    const input = label.querySelector("input");
+    input.addEventListener("change", () => {
+      if (!activeSubjects) activeSubjects = new Set(courseSet);
+      if (input.checked) activeSubjects.add(course);
+      else activeSubjects.delete(course);
+      if (activeSubjects.size === courseSet.length) activeSubjects = null;
+      updateSubjectSummary();
+      renderCalendar();
+      if (currentView === "list") renderList();
+    });
+
+    subjectFilterList.appendChild(label);
+  });
+  updateSubjectSummary();
+}
+
+subjectFilterBtn.addEventListener("click", () => {
+  const open = subjectFilterPanel.classList.toggle("open");
+  subjectFilterBtn.setAttribute("aria-expanded", open ? "true" : "false");
+});
+
+document.getElementById("subjectSelectAll").addEventListener("click", () => {
+  activeSubjects = null;
+  renderSubjectOptions();
+  renderCalendar();
+  if (currentView === "list") renderList();
+});
+
+document.getElementById("subjectClearAll").addEventListener("click", () => {
+  activeSubjects = new Set();
+  renderSubjectOptions();
+  renderCalendar();
+  if (currentView === "list") renderList();
+});
+
+document.addEventListener("click", (e) => {
+  if (!subjectFilterPanel.contains(e.target) && !subjectFilterBtn.contains(e.target)) {
+    subjectFilterPanel.classList.remove("open");
+    subjectFilterBtn.setAttribute("aria-expanded", "false");
+  }
+});
+
+function fmtDate(dStr) {
+  const d = new Date(dStr + "T00:00:00");
+  return d.toLocaleDateString("en-GB", { day:"numeric", month:"long", year:"numeric" });
+}
+
+function shortDay(dStr) {
+  const d = new Date(dStr + "T00:00:00");
+  return d.toLocaleDateString("en-US", { weekday:"short" });
 }
 
 function getFiltered() {
-  const fv = fSel.value, cv = cSel.value, tv = document.getElementById('filterTime').value;
-  const sq = document.getElementById('searchBox').value.toLowerCase().trim();
+  const fv = fSel.value;
+  const tv = tSel.value;
+  const sq = searchBox.value.trim().toLowerCase();
+
   return EVENTS.filter(e => {
     if (!activeAreas.has(e.area)) return false;
     if (fv && e.faculty !== fv) return false;
-    if (cv && e.course !== cv) return false;
+    if (activeSubjects && !activeSubjects.has(e.course)) return false;
     if (tv && !e.time.startsWith(tv)) return false;
     if (sq && !e.course.toLowerCase().includes(sq) && !e.faculty.toLowerCase().includes(sq) && !e.code.toLowerCase().includes(sq)) return false;
     return true;
   });
 }
 
+function renderMonthTabs() {
+  monthTabs.innerHTML = "";
+  monthNames.forEach((m, i) => {
+    const b = document.createElement("button");
+    b.className = "month-tab" + (i === currentMonth ? " active" : "");
+    b.textContent = m.split(" ")[0];
+    b.onclick = () => { currentMonth = i; renderCalendar(); };
+    monthTabs.appendChild(b);
+  });
+}
+
 function renderCalendar() {
-  const {name, year, month} = MONTHS[currentMonth];
+  const monthIndex = monthMap[currentMonth];
+  monthName.textContent = monthNames[currentMonth];
   const filtered = getFiltered();
-  const today = new Date();
+  const monthEvents = filtered.filter(e => new Date(e.date).getMonth() === monthIndex);
 
-  // Count for this month
-  const cnt = filtered.filter(e => e.date.startsWith(`${year}-${String(month+1).padStart(2,'0')}`)).length;
-  document.getElementById('monthName').textContent = `${name} 2026`;
-  document.getElementById('monthCount').textContent = cnt ? `(${cnt} sessions)` : '';
+  monthCount.textContent = `${monthEvents.length} sessions`;
+  prevBtn.disabled = currentMonth === 0;
+  nextBtn.disabled = currentMonth === monthMap.length - 1;
+  renderMonthTabs();
 
-  const grid = document.getElementById('calGrid');
-  grid.innerHTML = '';
+  const year = 2026;
+  const first = new Date(year, monthIndex, 1);
+  const last = new Date(year, monthIndex + 1, 0);
+  const startDay = first.getDay();
+  const totalDays = last.getDate();
 
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month+1, 0).getDate();
-
-  // Build event map
-  const map = {};
-  filtered.forEach(e => {
-    if (!map[e.date]) map[e.date] = [];
-    map[e.date].push(e);
+  const eventsByDate = {};
+  monthEvents.forEach(e => {
+    if (!eventsByDate[e.date]) eventsByDate[e.date] = [];
+    eventsByDate[e.date].push(e);
   });
 
-  for (let i=0;i<firstDay;i++) {
-    const d=document.createElement('div'); d.className='day-cell empty'; grid.appendChild(d);
+  calGrid.innerHTML = "";
+
+  for (let i = 0; i < startDay; i++) {
+    const empty = document.createElement("div");
+    empty.className = "day-cell empty";
+    calGrid.appendChild(empty);
   }
 
-  for (let d=1;d<=daysInMonth;d++) {
-    const mm = String(month+1).padStart(2,'0');
-    const dd = String(d).padStart(2,'0');
-    const key = `${year}-${mm}-${dd}`;
-    const evs = map[key] || [];
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0,10);
 
-    const cell = document.createElement('div');
-    cell.className = 'day-cell' + (evs.length?' has-events':'');
+  for (let day = 1; day <= totalDays; day++) {
+    const dStr = `${year}-${String(monthIndex + 1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+    const cellEvents = (eventsByDate[dStr] || []).sort((a,b) => a.time.localeCompare(b.time));
 
-    const isToday = today.getFullYear()===year && today.getMonth()===month && today.getDate()===d;
-    if (isToday) cell.classList.add('today');
+    const cell = document.createElement("div");
+    cell.className = "day-cell";
+    if (cellEvents.length) cell.classList.add("has-events");
+    if (dStr === todayStr) cell.classList.add("today");
 
-    const numDiv = document.createElement('div');
-    numDiv.className = 'day-num';
-    if (isToday) numDiv.innerHTML = `<span class="num-badge">${d}</span>`;
-    else numDiv.textContent = d;
-    cell.appendChild(numDiv);
+    const num = document.createElement("div");
+    num.className = "day-num";
+    num.innerHTML = dStr === todayStr
+      ? `<span class="num-badge">${day}</span>`
+      : `<span>${day}</span>`;
+    cell.appendChild(num);
 
-    const MAX=3;
-    evs.slice(0,MAX).forEach(ev => {
-      const tag = document.createElement('span');
+    cellEvents.slice(0, 4).forEach(ev => {
+      const tag = document.createElement("div");
       tag.className = `event-tag ${AREA_CLASS[ev.area]}`;
-      tag.textContent = SHORT[ev.course] || ev.course;
-      tag.title = `${ev.course} · ${ev.time}`;
-      tag.onclick = (e) => { e.stopPropagation(); openPanel(key, name); };
+      tag.textContent = ev.course;
+      tag.title = `${ev.course} • ${ev.time}`;
+      tag.onclick = (e) => { e.stopPropagation(); openDayPanel(dStr); };
       cell.appendChild(tag);
     });
 
-    if (evs.length > MAX) {
-      const more = document.createElement('div');
-      more.className = 'more-tag';
-      more.textContent = `+${evs.length-MAX} more`;
-      more.onclick = () => openPanel(key, name);
+    if (cellEvents.length > 4) {
+      const more = document.createElement("div");
+      more.className = "more-tag";
+      more.textContent = `+${cellEvents.length - 4} more`;
+      more.onclick = () => openDayPanel(dStr);
       cell.appendChild(more);
     }
 
-    if (evs.length) cell.style.cursor='pointer';
-    cell.onclick = () => { if (evs.length) openPanel(key, name); };
+    if (cellEvents.length) {
+      cell.onclick = () => openDayPanel(dStr);
+    }
 
-    grid.appendChild(cell);
+    calGrid.appendChild(cell);
   }
-
-  // Update stats counter
-  document.getElementById('statSessions').textContent = filtered.length;
 }
 
-function openPanel(dateKey, monthName) {
-  const evs = getFiltered().filter(e => e.date === dateKey);
-  if (!evs.length) return;
+function openDayPanel(dStr) {
+  const dayEvents = getFiltered()
+    .filter(e => e.date === dStr)
+    .sort((a,b) => a.time.localeCompare(b.time));
 
-  const [y,m,d] = dateKey.split('-');
-  const dt = new Date(+y,+m-1,+d);
-  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  document.getElementById('panelDate').textContent = `${dayNames[dt.getDay()]}, ${d} ${monthName} ${y}`;
+  panelDate.textContent = fmtDate(dStr);
+  panelBody.innerHTML = "";
 
-  // Group by time
-  const byTime = {};
-  evs.forEach(e => {
-    if (!byTime[e.time]) byTime[e.time] = [];
-    byTime[e.time].push(e);
+  const grouped = {};
+  dayEvents.forEach(e => {
+    if (!grouped[e.time]) grouped[e.time] = [];
+    grouped[e.time].push(e);
   });
-  const sortedTimes = Object.keys(byTime).sort();
 
-  let html = '';
-  sortedTimes.forEach(t => {
-    html += `<div class="time-group"><div class="time-label">${t.replace(/\./g,':')}</div>`;
-    byTime[t].forEach(ev => {
-      html += `<div class="session-card ${AREA_CLASS[ev.area]}">
-        <div class="session-course">${ev.course}</div>
+  Object.keys(grouped).forEach(time => {
+    const group = document.createElement("div");
+    group.className = "time-group";
+
+    const label = document.createElement("div");
+    label.className = "time-label";
+    label.textContent = time;
+    group.appendChild(label);
+
+    grouped[time].forEach(e => {
+      const card = document.createElement("div");
+      card.className = `session-card ${AREA_CLASS[e.area]}`;
+      card.innerHTML = `
+        <div class="session-course">${e.course}</div>
         <div class="session-meta">
-          <span>👤 ${ev.faculty}</span>
-          <span class="badge ${AREA_CLASS[ev.area]}">${ev.area}</span>
-          <span class="code-badge">${ev.code}</span>
+          <span>${e.faculty}</span>
+          <span class="code-badge">${e.code}</span>
+          <span class="badge ${AREA_CLASS[e.area]}">${e.area}</span>
+          <span>Track ${e.track}</span>
         </div>
-      </div>`;
+      `;
+      group.appendChild(card);
     });
-    html += '</div>';
+
+    panelBody.appendChild(group);
   });
 
-  document.getElementById('panelBody').innerHTML = html;
-  document.getElementById('overlay').classList.add('open');
-  document.getElementById('dayPanel').classList.add('open');
+  overlay.classList.add("open");
+  dayPanel.classList.add("open");
 }
 
 function closePanel() {
-  document.getElementById('overlay').classList.remove('open');
-  document.getElementById('dayPanel').classList.remove('open');
+  overlay.classList.remove("open");
+  dayPanel.classList.remove("open");
 }
 
-function changeMonth(dir) {
-  currentMonth = Math.max(0, Math.min(MONTHS.length-1, currentMonth+dir));
-  buildMonthTabs();
-  renderCalendar();
+function renderList() {
+  const filtered = getFiltered().sort((a,b) => (a.date + a.time).localeCompare(b.date + b.time));
+  listContent.innerHTML = "";
+
+  let currentDate = "";
+  let block = null;
+
+  filtered.forEach(e => {
+    if (e.date !== currentDate) {
+      currentDate = e.date;
+      block = document.createElement("div");
+      block.className = "list-day-block";
+      block.innerHTML = `
+        <div class="list-day-head">
+          <span>${fmtDate(e.date)}</span>
+          <span class="list-day-wday">${shortDay(e.date)}</span>
+        </div>
+      `;
+      listContent.appendChild(block);
+    }
+
+    const row = document.createElement("div");
+    row.className = "list-row";
+    row.innerHTML = `
+      <div class="list-time">${e.time}</div>
+      <div>
+        <div class="list-course">${e.course}</div>
+        <div class="list-faculty">${e.faculty}</div>
+      </div>
+      <div class="list-badges">
+        <span class="code-badge">${e.code}</span>
+        <span class="badge ${AREA_CLASS[e.area]}">${e.area}</span>
+      </div>
+    `;
+    block.appendChild(row);
+  });
 }
 
 function toggleArea(el) {
   const area = el.dataset.area;
-  if (activeAreas.has(area)) { activeAreas.delete(area); el.classList.add('off'); }
-  else { activeAreas.add(area); el.classList.remove('off'); }
+  if (activeAreas.has(area)) {
+    activeAreas.delete(area);
+    el.classList.add("off");
+  } else {
+    activeAreas.add(area);
+    el.classList.remove("off");
+  }
   renderCalendar();
-  if (currentView==='list') renderList();
+  if (currentView === "list") renderList();
 }
 
-function setView(v) {
-  currentView = v;
-  document.getElementById('btnCal').classList.toggle('active', v==='cal');
-  document.getElementById('btnList').classList.toggle('active', v==='list');
-  document.getElementById('calView').style.display = v==='cal'?'block':'none';
-  document.getElementById('listView').classList.toggle('visible', v==='list');
-  if (v==='list') renderList();
+function changeMonth(step) {
+  currentMonth += step;
+  if (currentMonth < 0) currentMonth = 0;
+  if (currentMonth > monthMap.length - 1) currentMonth = monthMap.length - 1;
+  renderCalendar();
 }
 
-function renderList() {
-  const filtered = getFiltered();
-  // Group by date
-  const byDate = {};
-  filtered.forEach(e => {
-    if (!byDate[e.date]) byDate[e.date] = [];
-    byDate[e.date].push(e);
-  });
-  const dates = Object.keys(byDate).sort();
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-  let html = '';
-  dates.forEach(dk => {
-    const [y,m,d] = dk.split('-');
-    const dt = new Date(+y,+m-1,+d);
-    const evs = byDate[dk].sort((a,b)=>a.time.localeCompare(b.time));
-    html += `<div class="list-day-block">
-      <div class="list-day-head">
-        ${d} ${months[+m-1]} ${y}
-        <span class="list-day-wday">${days[dt.getDay()]}</span>
-      </div>`;
-    evs.forEach(ev => {
-      html += `<div class="list-row">
-        <div class="list-time">${ev.time.replace(/\./g,':')}</div>
-        <div>
-          <div class="list-course">${ev.course}</div>
-          <div class="list-faculty">${ev.faculty} · <span class="code-badge">${ev.code}</span></div>
-        </div>
-        <div class="list-badges">
-          <span class="badge ${AREA_CLASS[ev.area]}">${ev.area}</span>
-        </div>
-      </div>`;
-    });
-    html += '</div>';
-  });
-
-  if (!html) html = '<p style="padding:2rem;color:var(--ink-muted)">No sessions match your filters.</p>';
-  document.getElementById('listContent').innerHTML = html;
+function setView(view) {
+  currentView = view;
+  btnCal.classList.toggle("active", view === "cal");
+  btnList.classList.toggle("active", view === "list");
+  calView.style.display = view === "cal" ? "block" : "none";
+  listView.classList.toggle("visible", view === "list");
+  if (view === "list") renderList();
 }
 
-// Bind filter changes
-['filterFaculty','filterCourse','filterTime','searchBox'].forEach(id => {
-  document.getElementById(id).addEventListener('input', () => {
+[fSel, tSel, searchBox].forEach(el => {
+  el.addEventListener("input", () => {
     renderCalendar();
-    if (currentView==='list') renderList();
+    if (currentView === "list") renderList();
   });
 });
 
-// Keyboard close
-document.addEventListener('keydown', e => { if(e.key==='Escape') closePanel(); });
-
-// Init
-buildMonthTabs();
+renderSubjectOptions();
 renderCalendar();
 </script>
+
 </body>
 </html>
