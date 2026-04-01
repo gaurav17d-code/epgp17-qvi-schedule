@@ -450,6 +450,15 @@ body {
   transition: all 0.15s;
 }
 .vtbtn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+#btnReset {
+  color: var(--accent);
+  border-color: var(--border);
+}
+
+#btnReset:hover {
+  border-color: var(--accent);
+  background: #fff4ef;
+}
 
 .list-view {
   display: none;
@@ -711,7 +720,9 @@ body {
   <div class="view-toggle">
     <button class="vtbtn active" id="btnCal" onclick="setView('cal')">📅 Calendar</button>
     <button class="vtbtn" id="btnList" onclick="setView('list')">☰ List</button>
+    <button class="vtbtn" id="btnReset" type="button" onclick="resetFilters()">↺ Reset</button>
   </div>
+
 </div>
 
 <!-- AREA LEGEND -->
@@ -810,6 +821,8 @@ let activeSubjects = null;
 let activeAreas = new Set(['MM & IS','FAC & OBHR','QMOM & HLAM','SM & Economics']);
 let currentView = 'cal';
 
+const STORAGE_KEY = 'epgp17-qvi-schedule-state-v1';
+
 // Populate filters
 const facSet = new Set(), courseSet = new Set();
 EVENTS.forEach(e => {
@@ -822,6 +835,94 @@ const subjectFilterBtn = document.getElementById('subjectFilterBtn');
 const subjectFilterPanel = document.getElementById('subjectFilterPanel');
 const subjectFilterList = document.getElementById('subjectFilterList');
 const subjectFilterCount = document.getElementById('subjectFilterCount');
+ function saveState() {
+  try {
+    const state = {
+      faculty: fSel.value,
+      time: document.getElementById('filterTime').value,
+      search: document.getElementById('searchBox').value,
+      activeAreas: [...activeAreas],
+      currentView,
+      currentMonth,
+      activeSubjects: activeSubjects === null ? null : [...activeSubjects]
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.warn('Could not save state:', err);
+  }
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+
+    const state = JSON.parse(raw);
+
+    if (typeof state.faculty === 'string') {
+      fSel.value = state.faculty;
+    }
+
+    if (typeof state.time === 'string') {
+      document.getElementById('filterTime').value = state.time;
+    }
+
+    if (typeof state.search === 'string') {
+      document.getElementById('searchBox').value = state.search;
+    }
+
+    if (Array.isArray(state.activeAreas) && state.activeAreas.length) {
+      activeAreas = new Set(state.activeAreas);
+    }
+
+    if (state.currentView === 'cal' || state.currentView === 'list') {
+      currentView = state.currentView;
+    }
+
+    if (Number.isInteger(state.currentMonth) && state.currentMonth >= 0 && state.currentMonth < MONTHS.length) {
+      currentMonth = state.currentMonth;
+    }
+
+    if (state.activeSubjects === null) {
+      activeSubjects = null;
+    } else if (Array.isArray(state.activeSubjects)) {
+      activeSubjects = new Set(
+        state.activeSubjects.filter(course => sortedCourses.includes(course))
+      );
+    }
+  } catch (err) {
+    console.warn('Could not load saved state:', err);
+  }
+}
+
+function resetFilters() {
+  activeSubjects = null;
+  activeAreas = new Set(['MM & IS','FAC & OBHR','QMOM & HLAM','SM & Economics']);
+  currentView = 'cal';
+  currentMonth = 0;
+
+  fSel.value = '';
+  document.getElementById('filterTime').value = '';
+  document.getElementById('searchBox').value = '';
+
+  renderSubjectOptions();
+
+  document.querySelectorAll('.legend-chip').forEach(chip => {
+    chip.classList.remove('off');
+  });
+
+  buildMonthTabs();
+  setView('cal');
+  renderCalendar();
+
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.warn('Could not clear saved state:', err);
+  }
+}
+
 
 [...facSet].sort().forEach(f => {
   const o = document.createElement('option');
@@ -854,18 +955,19 @@ function renderSubjectOptions() {
       <span>${course}<small>Toggle in calendar &amp; list view</small></span>
     `;
 
-    label.querySelector('input').addEventListener('change', ev => {
-      if (!activeSubjects) activeSubjects = new Set(sortedCourses);
+ label.querySelector('input').addEventListener('change', ev => {
+  if (!activeSubjects) activeSubjects = new Set(sortedCourses);
 
-      if (ev.target.checked) activeSubjects.add(course);
-      else activeSubjects.delete(course);
+  if (ev.target.checked) activeSubjects.add(course);
+  else activeSubjects.delete(course);
 
-      if (activeSubjects.size === sortedCourses.length) activeSubjects = null;
+  if (activeSubjects.size === sortedCourses.length) activeSubjects = null;
 
-      updateSubjectSummary();
-      renderCalendar();
-      if (currentView === 'list') renderList();
-    });
+  updateSubjectSummary();
+  renderCalendar();
+  if (currentView === 'list') renderList();
+  saveState();
+});
 
     subjectFilterList.appendChild(label);
   });
@@ -885,6 +987,7 @@ document.getElementById('subjectSelectAll').addEventListener('click', () => {
   renderSubjectOptions();
   renderCalendar();
   if (currentView === 'list') renderList();
+  saveState();
 });
 
 document.getElementById('subjectClearAll').addEventListener('click', () => {
@@ -892,6 +995,7 @@ document.getElementById('subjectClearAll').addEventListener('click', () => {
   renderSubjectOptions();
   renderCalendar();
   if (currentView === 'list') renderList();
+  saveState();
 });
 
 document.addEventListener('click', e => {
@@ -909,7 +1013,7 @@ MONTHS.forEach((m,i) => {
   t.className = 'month-tab' + (i===0?' active':'');
   t.textContent = m.name;
   t.dataset.idx = i;
-  t.onclick = () => { currentMonth = i; buildMonthTabs(); renderCalendar(); };
+  t.onclick = () => { currentMonth = i; buildMonthTabs(); renderCalendar(); saveState(); };
   tabsEl.appendChild(t);
 });
 
@@ -1054,24 +1158,34 @@ function changeMonth(dir) {
   currentMonth = Math.max(0, Math.min(MONTHS.length-1, currentMonth+dir));
   buildMonthTabs();
   renderCalendar();
+  saveState();
 }
 
 function toggleArea(el) {
   const area = el.dataset.area;
-  if (activeAreas.has(area)) { activeAreas.delete(area); el.classList.add('off'); }
-  else { activeAreas.add(area); el.classList.remove('off'); }
+  if (activeAreas.has(area)) {
+    activeAreas.delete(area);
+    el.classList.add('off');
+  } else {
+    activeAreas.add(area);
+    el.classList.remove('off');
+  }
   renderCalendar();
-  if (currentView==='list') renderList();
+  if (currentView === 'list') renderList();
+  saveState();
 }
+
 
 function setView(v) {
   currentView = v;
-  document.getElementById('btnCal').classList.toggle('active', v==='cal');
-  document.getElementById('btnList').classList.toggle('active', v==='list');
-  document.getElementById('calView').style.display = v==='cal'?'block':'none';
-  document.getElementById('listView').classList.toggle('visible', v==='list');
-  if (v==='list') renderList();
+  document.getElementById('btnCal').classList.toggle('active', v === 'cal');
+  document.getElementById('btnList').classList.toggle('active', v === 'list');
+  document.getElementById('calView').style.display = v === 'cal' ? 'block' : 'none';
+  document.getElementById('listView').classList.toggle('visible', v === 'list');
+  if (v === 'list') renderList();
+  saveState();
 }
+
 
 function renderList() {
   const filtered = getFiltered();
@@ -1115,19 +1229,47 @@ function renderList() {
 }
 
 // Bind filter changes
-['filterFaculty','filterTime','searchBox'].forEach(id => {
-  document.getElementById(id).addEventListener('input', () => {
-    renderCalendar();
-    if (currentView==='list') renderList();
-  });
+fSel.addEventListener('change', () => {
+  renderCalendar();
+  if (currentView === 'list') renderList();
+  saveState();
 });
+
+document.getElementById('filterTime').addEventListener('change', () => {
+  renderCalendar();
+  if (currentView === 'list') renderList();
+  saveState();
+});
+
+document.getElementById('searchBox').addEventListener('input', () => {
+  renderCalendar();
+  if (currentView === 'list') renderList();
+  saveState();
+});
+
 
 // Keyboard close
 document.addEventListener('keydown', e => { if(e.key==='Escape') closePanel(); });
 
 // Init
+renderSubjectOptions();
+loadState();
+renderSubjectOptions();
+
+document.querySelectorAll('.legend-chip').forEach(chip => {
+  const area = chip.dataset.area;
+  chip.classList.toggle('off', !activeAreas.has(area));
+});
+
 buildMonthTabs();
+setView(currentView);
 renderCalendar();
+if (currentView === 'list') renderList();
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePanel();
+});
+
 </script>
 </body>
 </html>
