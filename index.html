@@ -523,6 +523,85 @@ body {
   .list-badges { justify-content: flex-start; }
   .header-stats { display: none; }
 }
+
+/* ─── SUBJECT MULTI-SELECT ─────────────────────── */
+.subject-filter-wrap { position: relative; }
+.subject-filter-btn {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.82rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.35rem 0.7rem;
+  color: var(--ink);
+  cursor: pointer;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+.subject-filter-btn span {
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+.subject-filter-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  width: min(360px, 90vw);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.15);
+  padding: 0.8rem;
+  z-index: 50;
+}
+.subject-filter-panel.open { display: block; }
+.subject-filter-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+.subject-filter-actions button {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.subject-filter-list {
+  max-height: 280px;
+  overflow-y: auto;
+  display: grid;
+  gap: 0.25rem;
+}
+.subject-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+}
+.subject-option:hover { border-color: var(--border); }
+.subject-option input { margin-top: 0.2rem; accent-color: var(--accent); flex-shrink: 0; }
+.subject-option span { line-height: 1.35; }
+.subject-option small { display: block; color: var(--ink-muted); font-size: 0.63rem; margin-top: 0.08rem; }
+@media (max-width: 700px) {
+  .subject-filter-wrap { width: 100%; }
+  .subject-filter-btn { width: 100%; min-width: 0; }
+  .subject-filter-panel { width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -556,8 +635,17 @@ body {
     <select id="filterFaculty"><option value="">All Faculty</option></select>
   </div>
   <div>
-    <label for="filterCourse">Course</label>
-    <select id="filterCourse"><option value="">All Courses</option></select>
+    <label>Subjects</label>
+    <button type="button" class="subject-filter-btn" id="subjectFilterBtn" aria-expanded="false">
+      Select subjects <span id="subjectFilterCount">All</span>
+    </button>
+    <div class="subject-filter-panel" id="subjectFilterPanel">
+      <div class="subject-filter-actions">
+        <button type="button" id="subjectSelectAll">Select all</button>
+        <button type="button" id="subjectClearAll">Clear all</button>
+      </div>
+      <div class="subject-filter-list" id="subjectFilterList"></div>
+    </div>
   </div>
   <div>
     <label for="filterTime">Time</label>
@@ -671,6 +759,7 @@ const SHORT = {
 };
 
 let currentMonth = 0;
+let activeSubjects = null;
 let activeAreas = new Set(['MM & IS','FAC & OBHR','QMOM & HLAM','SM & Economics']);
 let currentView = 'cal';
 
@@ -678,9 +767,62 @@ let currentView = 'cal';
 const facSet = new Set(), courseSet = new Set();
 EVENTS.forEach(e => { facSet.add(e.faculty); courseSet.add(e.course); });
 const fSel = document.getElementById('filterFaculty');
-const cSel = document.getElementById('filterCourse');
+const subjectFilterBtn = document.getElementById('subjectFilterBtn');
+const subjectFilterPanel = document.getElementById('subjectFilterPanel');
+const subjectFilterList = document.getElementById('subjectFilterList');
+const subjectFilterCount = document.getElementById('subjectFilterCount');
 [...facSet].sort().forEach(f => { const o=document.createElement('option'); o.value=f; o.textContent=f; fSel.appendChild(o); });
-[...courseSet].sort().forEach(c => { const o=document.createElement('option'); o.value=c; o.textContent=c; cSel.appendChild(o); });
+const sortedCourses = [...courseSet].sort();
+
+function updateSubjectSummary() {
+  const total = sortedCourses.length;
+  const selected = activeSubjects ? activeSubjects.size : total;
+  subjectFilterCount.textContent = selected === total ? 'All' : selected + ' selected';
+}
+
+function renderSubjectOptions() {
+  subjectFilterList.innerHTML = '';
+  sortedCourses.forEach(course => {
+    const id = 'sub-' + course.replace(/[^a-z0-9]+/gi,'-').toLowerCase();
+    const label = document.createElement('label');
+    label.className = 'subject-option';
+    label.htmlFor = id;
+    const chk = !activeSubjects || activeSubjects.has(course);
+    label.innerHTML = '<input type="checkbox" id="'+id+'" '+(chk?'checked':'')+'>'+
+      '<span>'+course+'<small>Toggle in calendar &amp; list view</small></span>';
+    label.querySelector('input').addEventListener('change', ev => {
+      if (!activeSubjects) activeSubjects = new Set(sortedCourses);
+      if (ev.target.checked) activeSubjects.add(course); else activeSubjects.delete(course);
+      if (activeSubjects.size === sortedCourses.length) activeSubjects = null;
+      updateSubjectSummary();
+      renderCalendar();
+      if (currentView === 'list') renderList();
+    });
+    subjectFilterList.appendChild(label);
+  });
+  updateSubjectSummary();
+}
+
+renderSubjectOptions();
+
+subjectFilterBtn.addEventListener('click', () => {
+  const open = subjectFilterPanel.classList.toggle('open');
+  subjectFilterBtn.setAttribute('aria-expanded', String(open));
+});
+document.getElementById('subjectSelectAll').addEventListener('click', () => {
+  activeSubjects = null; renderSubjectOptions(); renderCalendar();
+  if (currentView === 'list') renderList();
+});
+document.getElementById('subjectClearAll').addEventListener('click', () => {
+  activeSubjects = new Set(); renderSubjectOptions(); renderCalendar();
+  if (currentView === 'list') renderList();
+});
+document.addEventListener('click', e => {
+  if (!subjectFilterPanel.contains(e.target) && !subjectFilterBtn.contains(e.target)) {
+    subjectFilterPanel.classList.remove('open');
+    subjectFilterBtn.setAttribute('aria-expanded','false');
+  }
+});
 
 // Month tabs
 const tabsEl = document.getElementById('monthTabs');
@@ -700,12 +842,12 @@ function buildMonthTabs() {
 }
 
 function getFiltered() {
-  const fv = fSel.value, cv = cSel.value, tv = document.getElementById('filterTime').value;
+  const fv = fSel.value, tv = document.getElementById('filterTime').value;
   const sq = document.getElementById('searchBox').value.toLowerCase().trim();
   return EVENTS.filter(e => {
     if (!activeAreas.has(e.area)) return false;
     if (fv && e.faculty !== fv) return false;
-    if (cv && e.course !== cv) return false;
+    if (activeSubjects && !activeSubjects.has(e.course)) return false;
     if (tv && !e.time.startsWith(tv)) return false;
     if (sq && !e.course.toLowerCase().includes(sq) && !e.faculty.toLowerCase().includes(sq) && !e.code.toLowerCase().includes(sq)) return false;
     return true;
@@ -893,7 +1035,7 @@ function renderList() {
 }
 
 // Bind filter changes
-['filterFaculty','filterCourse','filterTime','searchBox'].forEach(id => {
+['filterFaculty','filterTime','searchBox'].forEach(id => {
   document.getElementById(id).addEventListener('input', () => {
     renderCalendar();
     if (currentView==='list') renderList();
