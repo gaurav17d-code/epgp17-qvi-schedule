@@ -525,7 +525,10 @@ body {
 }
 
 /* ─── SUBJECT MULTI-SELECT ─────────────────────── */
-.subject-filter-wrap { position: relative; }
+.subject-filter-wrap {
+  position: relative;
+}
+
 .subject-filter-btn {
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.82rem;
@@ -542,11 +545,13 @@ body {
   gap: 0.6rem;
   white-space: nowrap;
 }
+
 .subject-filter-btn span {
   font-size: 0.72rem;
   color: var(--accent);
   font-weight: 600;
 }
+
 .subject-filter-panel {
   display: none;
   position: absolute;
@@ -558,16 +563,21 @@ body {
   border-radius: 10px;
   box-shadow: 0 14px 36px rgba(0,0,0,0.15);
   padding: 0.8rem;
-    max-height: 60vh;
-    overflow-y: auto;
-  z-index: 5;
+  max-height: 60vh;
+  overflow-y: auto;
+  z-index: 1000;
 }
-.subject-filter-panel.open { display: block; }
+
+.subject-filter-panel.open {
+  display: block;
+}
+
 .subject-filter-actions {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.6rem;
 }
+
 .subject-filter-actions button {
   font-size: 0.72rem;
   font-weight: 600;
@@ -577,12 +587,14 @@ body {
   cursor: pointer;
   padding: 0;
 }
+
 .subject-filter-list {
   max-height: 280px;
   overflow-y: auto;
   display: grid;
   gap: 0.25rem;
 }
+
 .subject-option {
   display: flex;
   align-items: flex-start;
@@ -595,14 +607,41 @@ body {
   padding: 0.4rem 0.5rem;
   cursor: pointer;
 }
-.subject-option:hover { border-color: var(--border); }
-.subject-option input { margin-top: 0.2rem; accent-color: var(--accent); flex-shrink: 0; }
-.subject-option span { line-height: 1.35; }
-.subject-option small { display: block; color: var(--ink-muted); font-size: 0.63rem; margin-top: 0.08rem; }
+
+.subject-option:hover {
+  border-color: var(--border);
+}
+
+.subject-option input {
+  margin-top: 0.2rem;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.subject-option span {
+  line-height: 1.35;
+}
+
+.subject-option small {
+  display: block;
+  color: var(--ink-muted);
+  font-size: 0.63rem;
+  margin-top: 0.08rem;
+}
+
 @media (max-width: 700px) {
-  .subject-filter-wrap { width: 100%; }
-  .subject-filter-btn { width: 100%; min-width: 0; }
-  .subject-filter-panel { width: 100%; }
+  .subject-filter-wrap {
+    width: 100%;
+  }
+
+  .subject-filter-btn {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .subject-filter-panel {
+    width: 100%;
+  }
 }
 </style>
 </head>
@@ -634,9 +673,12 @@ body {
 <div class="controls">
   <div>
     <label for="filterFaculty">Faculty</label>
-    <select id="filterFaculty"><option value="">All Faculty</option></select>
+    <select id="filterFaculty">
+      <option value="">All Faculty</option>
+    </select>
   </div>
-  <div>
+
+  <div class="subject-filter-wrap">
     <label>Subjects</label>
     <button type="button" class="subject-filter-btn" id="subjectFilterBtn" aria-expanded="false">
       Select subjects <span id="subjectFilterCount">All</span>
@@ -649,6 +691,7 @@ body {
       <div class="subject-filter-list" id="subjectFilterList"></div>
     </div>
   </div>
+
   <div>
     <label for="filterTime">Time</label>
     <select id="filterTime">
@@ -659,10 +702,12 @@ body {
       <option value="07.00 PM">07:00 PM</option>
     </select>
   </div>
+
   <div class="search-box">
     <span class="search-icon">🔍</span>
     <input id="searchBox" type="text" placeholder="Search course, faculty, code…">
   </div>
+
   <div class="view-toggle">
     <button class="vtbtn active" id="btnCal" onclick="setView('cal')">📅 Calendar</button>
     <button class="vtbtn" id="btnList" onclick="setView('list')">☰ List</button>
@@ -767,41 +812,64 @@ let currentView = 'cal';
 
 // Populate filters
 const facSet = new Set(), courseSet = new Set();
-EVENTS.forEach(e => { facSet.add(e.faculty); courseSet.add(e.course); });
+EVENTS.forEach(e => {
+  facSet.add(e.faculty);
+  courseSet.add(e.course);
+});
+
 const fSel = document.getElementById('filterFaculty');
 const subjectFilterBtn = document.getElementById('subjectFilterBtn');
 const subjectFilterPanel = document.getElementById('subjectFilterPanel');
 const subjectFilterList = document.getElementById('subjectFilterList');
 const subjectFilterCount = document.getElementById('subjectFilterCount');
-[...facSet].sort().forEach(f => { const o=document.createElement('option'); o.value=f; o.textContent=f; fSel.appendChild(o); });
+
+[...facSet].sort().forEach(f => {
+  const o = document.createElement('option');
+  o.value = f;
+  o.textContent = f;
+  fSel.appendChild(o);
+});
+
 const sortedCourses = [...courseSet].sort();
 
 function updateSubjectSummary() {
   const total = sortedCourses.length;
   const selected = activeSubjects ? activeSubjects.size : total;
-  subjectFilterCount.textContent = selected === total ? 'All' : selected + ' selected';
+  subjectFilterCount.textContent = selected === total ? 'All' : `${selected} selected`;
 }
 
 function renderSubjectOptions() {
   subjectFilterList.innerHTML = '';
+
   sortedCourses.forEach(course => {
-    const id = 'sub-' + course.replace(/[^a-z0-9]+/gi,'-').toLowerCase();
+    const id = 'sub-' + course.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
     const label = document.createElement('label');
     label.className = 'subject-option';
     label.htmlFor = id;
-    const chk = !activeSubjects || activeSubjects.has(course);
-    label.innerHTML = '<input type="checkbox" id="'+id+'" '+(chk?'checked':'')+'>'+
-      '<span>'+course+'<small>Toggle in calendar &amp; list view</small></span>';
+
+    const checked = !activeSubjects || activeSubjects.has(course);
+
+    label.innerHTML = `
+      <input type="checkbox" id="${id}" ${checked ? 'checked' : ''}>
+      <span>${course}<small>Toggle in calendar &amp; list view</small></span>
+    `;
+
     label.querySelector('input').addEventListener('change', ev => {
       if (!activeSubjects) activeSubjects = new Set(sortedCourses);
-      if (ev.target.checked) activeSubjects.add(course); else activeSubjects.delete(course);
+
+      if (ev.target.checked) activeSubjects.add(course);
+      else activeSubjects.delete(course);
+
       if (activeSubjects.size === sortedCourses.length) activeSubjects = null;
+
       updateSubjectSummary();
       renderCalendar();
       if (currentView === 'list') renderList();
     });
+
     subjectFilterList.appendChild(label);
   });
+
   updateSubjectSummary();
 }
 
@@ -811,20 +879,28 @@ subjectFilterBtn.addEventListener('click', () => {
   const open = subjectFilterPanel.classList.toggle('open');
   subjectFilterBtn.setAttribute('aria-expanded', String(open));
 });
+
 document.getElementById('subjectSelectAll').addEventListener('click', () => {
-  activeSubjects = null; renderSubjectOptions(); renderCalendar();
+  activeSubjects = null;
+  renderSubjectOptions();
+  renderCalendar();
   if (currentView === 'list') renderList();
 });
+
 document.getElementById('subjectClearAll').addEventListener('click', () => {
-  activeSubjects = new Set(); renderSubjectOptions(); renderCalendar();
+  activeSubjects = new Set();
+  renderSubjectOptions();
+  renderCalendar();
   if (currentView === 'list') renderList();
 });
+
 document.addEventListener('click', e => {
   if (!subjectFilterPanel.contains(e.target) && !subjectFilterBtn.contains(e.target)) {
     subjectFilterPanel.classList.remove('open');
-    subjectFilterBtn.setAttribute('aria-expanded','false');
+    subjectFilterBtn.setAttribute('aria-expanded', 'false');
   }
 });
+
 
 // Month tabs
 const tabsEl = document.getElementById('monthTabs');
@@ -837,21 +913,23 @@ MONTHS.forEach((m,i) => {
   tabsEl.appendChild(t);
 });
 
-function buildMonthTabs() {
-  document.querySelectorAll('.month-tab').forEach((t,i) => t.classList.toggle('active', i===currentMonth));
-  document.getElementById('prevBtn').disabled = currentMonth === 0;
-  document.getElementById('nextBtn').disabled = currentMonth === MONTHS.length - 1;
-}
-
 function getFiltered() {
-  const fv = fSel.value, tv = document.getElementById('filterTime').value;
+  const fv = fSel.value;
+  const tv = document.getElementById('filterTime').value;
   const sq = document.getElementById('searchBox').value.toLowerCase().trim();
+
   return EVENTS.filter(e => {
     if (!activeAreas.has(e.area)) return false;
     if (fv && e.faculty !== fv) return false;
     if (activeSubjects && !activeSubjects.has(e.course)) return false;
     if (tv && !e.time.startsWith(tv)) return false;
-    if (sq && !e.course.toLowerCase().includes(sq) && !e.faculty.toLowerCase().includes(sq) && !e.code.toLowerCase().includes(sq)) return false;
+    if (
+      sq &&
+      !e.course.toLowerCase().includes(sq) &&
+      !e.faculty.toLowerCase().includes(sq) &&
+      !e.code.toLowerCase().includes(sq)
+    ) return false;
+
     return true;
   });
 }
